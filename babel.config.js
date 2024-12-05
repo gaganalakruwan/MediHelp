@@ -17,6 +17,7 @@ module.exports = {
       },
     ],
     'jest-hoist',
+    'nativewind/babel',
     'react-native-reanimated/plugin',
   ],
 };
