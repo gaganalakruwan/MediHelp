@@ -3,10 +3,10 @@ module.exports = {
   content: ["./App.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     colors: {
-      primary: "#C3E2E5",
+      primary: "#CCF4F3",
       secondary: "#AACFD5",
       tertiary: '#68B8C1',
-      quatanary: '#298A91',
+      quatanary: '#0B8FAC',
       quinary: '#06384F',
       senary: '#F97433',
       septenary: '#CC3F08',

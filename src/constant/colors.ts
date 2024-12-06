@@ -13,5 +13,10 @@ export default {
   iconBlack:'#444749',
   backArrowBlack:'#45464E',
   ImageBackground:'#F1E6E3',
-  seperator:'#026C8F14'
+  seperator:'#026C8F14',
+  primary: "#CCF4F3",
+  secondary: "#AACFD5",
+  tertiary: '#68B8C1',
+  quatanary: '#0B8FAC',
+  quinary: '#06384F',
 };
