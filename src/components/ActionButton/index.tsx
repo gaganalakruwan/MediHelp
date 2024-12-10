@@ -46,7 +46,7 @@ const ActionButton = ({
   const {lIconName, lIconProvider, lIconColor, lIconSize} =
     (leftIcon as LeftIconProps) || {};
   return (
-    <TouchableOpacity className="bg-quatanary h-12 items-center justify-center" style={[customStyle]} onPress={onPress} testID={testId}>
+    <TouchableOpacity className="bg-quatanary h-12 items-center justify-center rounded-lg" style={[customStyle]} onPress={onPress} testID={testId}>
       {(leftIcon || isLeftIcon) && (
         <CustomIcon
           icon={lIconName || 'arrow-left'}

@@ -3,22 +3,14 @@ import {
   BackHandler,
   KeyboardAvoidingView,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import InputText from '../../components/InputText';
 import {useNavigation} from '@react-navigation/native';
-import ActionButton from 'components/ActionButton';
-import {object, string, ref} from 'yup';
-import {Controller, useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {useDispatch} from 'react-redux';
-import {
-  endLoading,
-  setMessage,
-  startLoading,
-} from '../../redux/action/SpinnerAction';
+import ActionButton from 'components/ActionButton'; 
 import style from './style';
 
 const Login = () => {
@@ -47,9 +39,9 @@ const Login = () => {
   }, []);
 
   return (
-    <SafeAreaView style={style.container}>
+    <SafeAreaView className="flex">
       <View style={style.innerContainer}>
-        <KeyboardAvoidingView>
+        <KeyboardAvoidingView >
           <View className="mt-10 items-center mb-10">
             <Text className="text-quatanary font-bold text-3xl">Welcome</Text>
           </View>
@@ -69,6 +61,10 @@ const Login = () => {
             placeHolder="Password"
           />
 
+          <TouchableOpacity className="items-end">
+            <Text className="font-semibold text-black text-lg">Forget Password</Text>
+          </TouchableOpacity>
+
           <View style={{}}>
             <ActionButton
               title={'Login'}
@@ -76,6 +72,12 @@ const Login = () => {
             />
           </View>
         </KeyboardAvoidingView>
+        <View className="flex-row">
+          <Text>Don't you have an account?</Text>
+          <TouchableOpacity>
+          <Text>Signup</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
