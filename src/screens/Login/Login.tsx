@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StatusBar,
   Text,
   TouchableOpacity,
   View,
@@ -48,6 +49,12 @@ const Login = () => {
 
   return (
     <SafeAreaView style={style.container}>
+      <StatusBar
+        animated={true}
+        backgroundColor="#FFF" // Set the desired background color (e.g., blue)
+        barStyle="dark-content" // Light icons and text for dark backgrounds
+        translucent={false} // Set to true for a transparent status bar
+      />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{flex: 1}}>

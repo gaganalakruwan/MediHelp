@@ -12,7 +12,7 @@ const AuthStackNavigator = () => {
   return (
     <AuthStack.Navigator
       screenOptions={{headerShown: false, gestureEnabled: false}}
-      initialRouteName={'LOGIN' as keyof StackParameterList}>
+      initialRouteName={'SPLASH' as keyof StackParameterList}>
       <AuthStack.Screen
         name={'SPLASH' as keyof StackParameterList}
         component={Splash}
@@ -29,7 +29,6 @@ const AuthStackNavigator = () => {
         name={'HOME' as keyof StackParameterList}
         component={Home}
       />
-    
     </AuthStack.Navigator>
   );
 };
