@@ -6,6 +6,7 @@ import Login from 'screens/Login/Login';
 import Home from 'screens/Home/Home';
 import Splash from 'screens/Splash/Splash';
 import AddEmployee from 'screens/AddEmployee/AddEmployee';
+import AddLocation from 'screens/AddLocation/AddLocation';
 
 const AuthStack = createStackNavigator<StackParameterList>();
 
@@ -13,7 +14,7 @@ const AuthStackNavigator = () => {
   return (
     <AuthStack.Navigator
       screenOptions={{headerShown: false, gestureEnabled: false}}
-      initialRouteName={'ADDEMPLOYEE' as keyof StackParameterList}>
+      initialRouteName={'ADDLOCATION' as keyof StackParameterList}>
       <AuthStack.Screen
         name={'SPLASH' as keyof StackParameterList}
         component={Splash}
@@ -34,6 +35,11 @@ const AuthStackNavigator = () => {
       <AuthStack.Screen
         name={'ADDEMPLOYEE' as keyof StackParameterList}
         component={AddEmployee}
+      />
+
+      <AuthStack.Screen
+        name={'ADDLOCATION' as keyof StackParameterList}
+        component={AddLocation}
       />
     </AuthStack.Navigator>
   );
