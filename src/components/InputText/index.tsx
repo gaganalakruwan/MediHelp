@@ -44,6 +44,9 @@ type InputProps = {
   error?: string;
   editable?: boolean;
   testId?: string;
+  labelFontSize?: number;
+  placeholderFontSize?: number;
+  labelFontWeight?: string;
 };
 
 const InputText = ({
@@ -62,6 +65,9 @@ const InputText = ({
   error,
   editable,
   testId,
+  labelFontSize,
+  placeholderFontSize,
+  labelFontWeight,
 }: InputProps) => {
   const {
     iconName,
@@ -91,7 +97,11 @@ const InputText = ({
 
   return (
     <View className="w-full" style={[{...containerStyle}]}>
-      <Text className="font-medium ml-1 mb-1 text-xl">{label}</Text>
+      <Text
+        className="font-medium ml-1 mb-1 text-xl"
+        style={{fontSize: labelFontSize, fontWeight: labelFontWeight}}>
+        {label}
+      </Text>
       <View style={style.inputWrapper}>
         <TextInput
           testID={testId}
@@ -104,7 +114,7 @@ const InputText = ({
           editable={editable}
           onFocus={onFocus}
           className="w-full text-black pl-5 pt-2 pb-3 h-12 bg-primary rounded-xl text-lg"
-          style={[inputStyle]}
+          style={[inputStyle, {fontSize: placeholderFontSize}]}
           blurOnSubmit={false}
           onSubmitEditing={() => Keyboard.dismiss()}
           autoFocus={autoFocus}
