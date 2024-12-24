@@ -3,6 +3,7 @@ import {
   BackHandler,
   Image,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -17,8 +18,10 @@ import style from './style';
 
 import CustomIcon from 'components/CustomIcon';
 import colors from 'constant/colors';
+import AuthStackNavigator from 'navigation/routes';
 
 const Login = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -45,9 +48,11 @@ const Login = () => {
 
   return (
     <SafeAreaView style={style.container}>
-      <ScrollView>
-        <View style={style.innerContainer}>
-          <KeyboardAvoidingView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{flex: 1}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          <View style={style.innerContainer}>
             <View className="mt-10 items-center mb-8">
               <Text className="text-quatanary font-bold text-3xl">Welcome</Text>
             </View>
@@ -67,7 +72,7 @@ const Login = () => {
               label="Password"
               onChange={setPassword}
               secureTextEntry
-              placeHolder="Password"
+              placeHolder="Enter Your Password"
             />
 
             <TouchableOpacity className="items-end mt-0">
@@ -106,21 +111,22 @@ const Login = () => {
                 />
               </TouchableOpacity>
             </View>
-          </KeyboardAvoidingView>
 
-          {/* Signup Section */}
-          <View style={style.signup}>
-            <Text className="font-semibold text-Gray-400 text-lg">
-              Don't have an account?{' '}
-            </Text>
-            <TouchableOpacity>
-              <Text className="font-semibold text-quatanary text-lg">
-                Sign Up
+            {/* Signup Section */}
+            <View style={style.signup}>
+              <Text className="font-semibold text-Gray-400 text-lg">
+                Don't have an account?{' '}
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('SIGNUP' as never)}>
+                <Text className="font-semibold text-quatanary text-lg">
+                  Sign Up
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

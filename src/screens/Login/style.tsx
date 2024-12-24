@@ -72,9 +72,9 @@ export default StyleSheet.create({
   },
 
   signup: {
-    bottom: -80,
     flexDirection: 'row',
     justifyContent: 'center',
+    marginVertical: 60, // Adjust spacing as needed
     width: '100%',
   },
 
