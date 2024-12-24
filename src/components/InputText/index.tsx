@@ -29,6 +29,7 @@ type LeftIconProps = {
 };
 
 type InputProps = {
+  label?: string;
   placeHolder: string;
   value: string;
   onChange?: (val: string) => void;
@@ -49,6 +50,7 @@ const InputText = ({
   containerStyle,
   keyboardType,
   onChange,
+  label,
   placeHolder,
   secureTextEntry,
   value,
@@ -83,13 +85,13 @@ const InputText = ({
     if (!passwordVisibility) {
       return 'eye';
     } else {
-      return 'eye-slash';
+      return 'eye-off';
     }
   }, [iconName, passwordVisibility]);
 
   return (
     <View className="w-full" style={[{...containerStyle}]}>
-      <Text className="font-medium ml-1 mb-1 text-xl">{placeHolder}</Text>
+      <Text className="font-medium ml-1 mb-1 text-xl">{label}</Text>
       <View style={style.inputWrapper}>
         <TextInput
           testID={testId}
@@ -114,7 +116,7 @@ const InputText = ({
             onPress={secureTextEntry ? toggleVisibility : action}>
             <CustomIcon
               icon={rightIconName}
-              type={iconProvider || 'FontAwesome'}
+              type={iconProvider || 'Ionicons'}
               size={iconSize || 24}
               color={iconColor || colors.quatanary}
             />

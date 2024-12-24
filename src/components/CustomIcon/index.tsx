@@ -8,6 +8,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {IconProps} from 'type';
 
 export type IconBaseProps = {
@@ -34,6 +35,9 @@ const CustomIcon = ({type, icon, ...props}: IconBaseProps) => {
       break;
     case 'FontAwesome5':
       return <FontAwesome5 name={icon} {...props} />;
+      break;
+    case 'Ionicons':
+      return <Ionicons name={icon} {...props} />;
       break;
     case 'Fontisto':
       return <Fontisto name={icon} {...props} />;
