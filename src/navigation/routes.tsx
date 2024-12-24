@@ -9,6 +9,7 @@ import AddEmployee from 'screens/AddEmployee/AddEmployee';
 import AddLocation from 'screens/AddLocation/AddLocation';
 import AddItineraryCategory from 'screens/AddItineraryCategory/AddItineraryCategory';
 import UploadOutcome from 'screens/UploadOutcome/UploadOutcome';
+import AddNextMonthPlan from 'screens/AddNextMonthPlan/AddNextMonthPlan';
 
 const AuthStack = createStackNavigator<StackParameterList>();
 
@@ -16,7 +17,7 @@ const AuthStackNavigator = () => {
   return (
     <AuthStack.Navigator
       screenOptions={{headerShown: false, gestureEnabled: false}}
-      initialRouteName={'UPLOADOUTCOME' as keyof StackParameterList}>
+      initialRouteName={'ADDNEXTMONTHPLAN' as keyof StackParameterList}>
       <AuthStack.Screen
         name={'SPLASH' as keyof StackParameterList}
         component={Splash}
@@ -52,6 +53,11 @@ const AuthStackNavigator = () => {
       <AuthStack.Screen
         name={'UPLOADOUTCOME' as keyof StackParameterList}
         component={UploadOutcome}
+      />
+
+      <AuthStack.Screen
+        name={'ADDNEXTMONTHPLAN' as keyof StackParameterList}
+        component={AddNextMonthPlan}
       />
     </AuthStack.Navigator>
   );
