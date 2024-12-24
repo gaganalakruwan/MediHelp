@@ -30,7 +30,7 @@ type LeftIconProps = {
 
 type InputProps = {
   label?: string;
-  placeHolder: string;
+  placeHolder?: string;
   value: string;
   onChange?: (val: string) => void;
   containerStyle?: ViewStyle;
@@ -47,6 +47,9 @@ type InputProps = {
   labelFontSize?: number;
   placeholderFontSize?: number;
   labelFontWeight?: string;
+  multiline?: boolean;
+  numberOfLines?: number;
+  maxLength?: number;
 };
 
 const InputText = ({
@@ -68,6 +71,9 @@ const InputText = ({
   labelFontSize,
   placeholderFontSize,
   labelFontWeight,
+  multiline = false,
+  numberOfLines,
+  maxLength,
 }: InputProps) => {
   const {
     iconName,
@@ -119,6 +125,9 @@ const InputText = ({
           onSubmitEditing={() => Keyboard.dismiss()}
           autoFocus={autoFocus}
           placeholderTextColor={colors.darkGray}
+          multiline={multiline}
+          numberOfLines={numberOfLines}
+          maxLength={maxLength}
         />
         {(iconName || secureTextEntry) && (
           <TouchableOpacity

@@ -16,20 +16,18 @@ import style from './style';
 import {useNavigation} from '@react-navigation/native';
 import Header from 'components/Header/Header';
 
-const AddEmployee = () => {
+const UploadOutcome = () => {
   const navigation = useNavigation();
-  const [name, setName] = useState('');
-  const [epfNo, setEpfNo] = useState('');
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [mobileNumber, setMobileNumber] = useState('');
-  const [allocateLocation, setAllocateLocation] = useState('');
+  const [postponedDate, setPostponedDate] = useState('');
+  const [feedBack, setFeedBack] = useState('');
+  const [comments, setComments] = useState('');
+  const [geoLocation, setGeoLocation] = useState('');
 
   return (
     <SafeAreaView style={style.container}>
       <Header
         isBack
-        title="Add Employee"
+        title="Upload Outcome"
         onBackPress={() => navigation.navigate('HOME' as never)}
       />
       <KeyboardAvoidingView
@@ -37,63 +35,41 @@ const AddEmployee = () => {
         style={{flex: 1}}>
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <View style={style.innerContainer}>
-            <View className="mb-7 mt-5">
-              <Text className="text-Gray-600 font-bold text-xl">
-                Employee Details
-              </Text>
-            </View>
-
             <InputText
-              value={name}
-              onChange={setName}
-              label="Name"
+              value={postponedDate}
+              onChange={setPostponedDate}
+              label="Postponed Date"
               labelFontSize={18}
               labelFontWeight="bold"
               placeholderFontSize={16}
             />
 
             <InputText
-              value={epfNo}
-              onChange={setEpfNo}
-              label="Epf No"
+              value={feedBack}
+              onChange={setFeedBack}
+              label="Feedback"
               labelFontSize={18}
               labelFontWeight="bold"
               placeholderFontSize={16}
             />
 
             <InputText
-              value={address}
-              onChange={setAddress}
-              label="Address"
+              value={comments}
+              onChange={setComments}
+              label="Comments"
               labelFontSize={18}
               labelFontWeight="bold"
               placeholderFontSize={16}
+              multiline={true}
+              numberOfLines={5}
+              inputStyle={{height: 155}}
+              maxLength={150}
             />
 
             <InputText
-              value={mobileNumber}
-              onChange={setMobileNumber}
-              label="Mobile Number"
-              labelFontSize={18}
-              labelFontWeight="bold"
-              placeholderFontSize={16}
-            />
-
-            <InputText
-              value={email}
-              onChange={setEmail}
-              label="Email"
-              placeHolder="Enter Your Email"
-              labelFontSize={18}
-              labelFontWeight="bold"
-              placeholderFontSize={16}
-            />
-
-            <InputText
-              value={allocateLocation}
-              onChange={setAllocateLocation}
-              label="Allocate Location"
-              placeHolder="Enter Your Allocate Location"
+              value={geoLocation}
+              onChange={setGeoLocation}
+              label="Track Geo Location"
               labelFontSize={18}
               labelFontWeight="bold"
               placeholderFontSize={16}
@@ -103,8 +79,8 @@ const AddEmployee = () => {
               <ActionButton
                 title={'Add'}
                 customStyle={{
-                  marginTop: 60,
-                  marginBottom: 50,
+                  marginTop: 90,
+                  marginBottom: 40,
                   width: '60%',
                 }}
               />
@@ -116,4 +92,4 @@ const AddEmployee = () => {
   );
 };
 
-export default AddEmployee;
+export default UploadOutcome;

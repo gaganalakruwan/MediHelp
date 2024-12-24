@@ -7,6 +7,8 @@ import Home from 'screens/Home/Home';
 import Splash from 'screens/Splash/Splash';
 import AddEmployee from 'screens/AddEmployee/AddEmployee';
 import AddLocation from 'screens/AddLocation/AddLocation';
+import AddItineraryCategory from 'screens/AddItineraryCategory/AddItineraryCategory';
+import UploadOutcome from 'screens/UploadOutcome/UploadOutcome';
 
 const AuthStack = createStackNavigator<StackParameterList>();
 
@@ -14,7 +16,7 @@ const AuthStackNavigator = () => {
   return (
     <AuthStack.Navigator
       screenOptions={{headerShown: false, gestureEnabled: false}}
-      initialRouteName={'ADDLOCATION' as keyof StackParameterList}>
+      initialRouteName={'UPLOADOUTCOME' as keyof StackParameterList}>
       <AuthStack.Screen
         name={'SPLASH' as keyof StackParameterList}
         component={Splash}
@@ -40,6 +42,16 @@ const AuthStackNavigator = () => {
       <AuthStack.Screen
         name={'ADDLOCATION' as keyof StackParameterList}
         component={AddLocation}
+      />
+
+      <AuthStack.Screen
+        name={'ADDITINERARYCATEGORY' as keyof StackParameterList}
+        component={AddItineraryCategory}
+      />
+
+      <AuthStack.Screen
+        name={'UPLOADOUTCOME' as keyof StackParameterList}
+        component={UploadOutcome}
       />
     </AuthStack.Navigator>
   );

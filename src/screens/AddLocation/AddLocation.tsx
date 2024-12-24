@@ -46,7 +46,6 @@ const AddLocation = () => {
               value={name}
               onChange={setName}
               label="Name"
-              placeHolder="Enter Name"
               labelFontSize={18}
               labelFontWeight="bold"
               placeholderFontSize={16}
@@ -56,7 +55,6 @@ const AddLocation = () => {
               value={address}
               onChange={setAddress}
               label="Address"
-              placeHolder="Enter Address"
               labelFontSize={18}
               labelFontWeight="bold"
               placeholderFontSize={16}
@@ -66,7 +64,6 @@ const AddLocation = () => {
               value={contactNumber}
               onChange={setContactNumber}
               label="Contact Number"
-              placeHolder="Enter Contact Number"
               labelFontSize={18}
               labelFontWeight="bold"
               placeholderFontSize={16}
@@ -76,7 +73,6 @@ const AddLocation = () => {
               value={locationManager}
               onChange={setLocationManager}
               label="Location Manager"
-              placeHolder="Enter Location Manager"
               labelFontSize={18}
               labelFontWeight="bold"
               placeholderFontSize={16}
@@ -86,7 +82,6 @@ const AddLocation = () => {
               value={mnagerContactNumber}
               onChange={setMnagerContactNumber}
               label="Manager Contact Number"
-              placeHolder="Enter Manager Contact Number"
               labelFontSize={18}
               labelFontWeight="bold"
               placeholderFontSize={16}

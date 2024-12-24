@@ -10,5 +10,6 @@ export default StyleSheet.create({
   innerContainer: {
     paddingHorizontal: 20,
     backgroundColor: colors.white,
+    marginTop: 25,
   },
 });
