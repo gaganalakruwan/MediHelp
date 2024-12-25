@@ -20,4 +20,5 @@ export declare type StackParameterList = {
   EDITOUTCOME: undefined;
   DELETEOUTCOME: undefined;
   EDITNEXTMONTHPLAN: undefined;
+  MASTERITINERARYDETAILS: undefined;
 };

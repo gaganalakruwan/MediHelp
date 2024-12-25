@@ -29,6 +29,18 @@ export default StyleSheet.create({
     color: '#666',
     marginTop: 6,
   },
+
+  location: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: -15,
+  },
+
+  client: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 6,
+  },
   rightContent: {
     flex: 1,
     justifyContent: 'center',
