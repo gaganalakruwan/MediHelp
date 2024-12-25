@@ -24,6 +24,7 @@
     "react-native-date-picker": "^5.0.8",
     "react-native-dropdown-select-list": "^2.0.5",
     "react-native-gesture-handler": "^2.21.2",
+    "react-native-image-slider-banner": "^1.0.3",
     "react-native-modal": "^13.0.1",
     "react-native-paper": "^5.12.5",
     "react-native-reanimated": "^3.16.3",

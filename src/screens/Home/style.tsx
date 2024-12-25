@@ -15,7 +15,7 @@ export default StyleSheet.create({
   servicesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 40,
+    marginTop: 20,
   },
   servicesTitle: {
     fontSize: 26,
