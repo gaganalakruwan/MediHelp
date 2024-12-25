@@ -3,7 +3,7 @@ import {View, StyleSheet, Text} from 'react-native';
 
 import style from './style';
 import {SelectList} from 'react-native-dropdown-select-list';
-import colors from 'constant/colors';
+
 import CustomIcon from 'components/CustomIcon';
 
 type DropdownProps = {

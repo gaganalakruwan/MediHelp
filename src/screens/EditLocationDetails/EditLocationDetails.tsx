@@ -126,7 +126,7 @@ const EditLocationDetails = () => {
                 </View>
 
                 <InputText
-                  value={formData.name}
+                  value={'Nadun'}
                   label="Name"
                   onChange={text => handleInputChange('name', text)}
                   labelFontSize={18}
