@@ -10,6 +10,8 @@ import AddLocation from 'screens/AddLocation/AddLocation';
 import AddItineraryCategory from 'screens/AddItineraryCategory/AddItineraryCategory';
 import UploadOutcome from 'screens/UploadOutcome/UploadOutcome';
 import AddNextMonthPlan from 'screens/AddNextMonthPlan/AddNextMonthPlan';
+import EditEmployee from 'screens/EditEmployee/EditEmployee';
+import EditLocationDetails from 'screens/EditLocationDetails/EditLocationDetails';
 
 const AuthStack = createStackNavigator<StackParameterList>();
 
@@ -17,7 +19,7 @@ const AuthStackNavigator = () => {
   return (
     <AuthStack.Navigator
       screenOptions={{headerShown: false, gestureEnabled: false}}
-      initialRouteName={'ADDNEXTMONTHPLAN' as keyof StackParameterList}>
+      initialRouteName={'EDITLOCATIONDETAILS' as keyof StackParameterList}>
       <AuthStack.Screen
         name={'SPLASH' as keyof StackParameterList}
         component={Splash}
@@ -58,6 +60,16 @@ const AuthStackNavigator = () => {
       <AuthStack.Screen
         name={'ADDNEXTMONTHPLAN' as keyof StackParameterList}
         component={AddNextMonthPlan}
+      />
+
+      <AuthStack.Screen
+        name={'EDITEMPLOYEE' as keyof StackParameterList}
+        component={EditEmployee}
+      />
+
+      <AuthStack.Screen
+        name={'EDITLOCATIONDETAILS' as keyof StackParameterList}
+        component={EditLocationDetails}
       />
     </AuthStack.Navigator>
   );

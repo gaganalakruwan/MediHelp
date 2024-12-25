@@ -83,7 +83,6 @@ const AddEmployee = () => {
               value={email}
               onChange={setEmail}
               label="Email"
-              placeHolder="Enter Your Email"
               labelFontSize={18}
               labelFontWeight="bold"
               placeholderFontSize={16}
@@ -93,7 +92,6 @@ const AddEmployee = () => {
               value={allocateLocation}
               onChange={setAllocateLocation}
               label="Allocate Location"
-              placeHolder="Enter Your Allocate Location"
               labelFontSize={18}
               labelFontWeight="bold"
               placeholderFontSize={16}

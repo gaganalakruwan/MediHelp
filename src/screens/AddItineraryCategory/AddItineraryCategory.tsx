@@ -38,8 +38,8 @@ const AddItineraryCategory = () => {
           <ActionButton
             title={'Add'}
             customStyle={{
-              marginTop: 80,
-              marginBottom: 50,
+              marginTop: 40,
+              marginBottom: 40,
               width: '60%',
             }}
           />
