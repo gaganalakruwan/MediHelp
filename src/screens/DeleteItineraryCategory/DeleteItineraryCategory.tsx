@@ -6,6 +6,7 @@ import {
   Platform,
   Text,
   Alert,
+  Image,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import InputText from 'components/InputText';
@@ -14,8 +15,9 @@ import {useNavigation} from '@react-navigation/native';
 import Header from 'components/Header/Header';
 import style from './style';
 import Dropdown from 'components/DropdownSelectList/DropdownSelectList';
+import InfoItem from 'components/InfoItem/InfoItem';
 
-const EditItineraryCategory = () => {
+const DeleteItineraryCategory = () => {
   const navigation = useNavigation();
   const dropdownData = [
     {key: 1, value: 'Category 01'},
@@ -26,55 +28,38 @@ const EditItineraryCategory = () => {
   ];
 
   const [selectedName, setSelectedName] = useState('');
-  const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({
-    categoryName: '',
-  });
+  const [showEmployeeDetails, setShowEmployeeDetails] = useState(false);
+
   const [error, setError] = useState('');
 
-  const handleSelect = (value: string) => {
+  const handleSelect = value => {
     setSelectedName(value);
-    setFormData(prev => ({...prev, categoryName: value})); // Populate the "Name" field
-    setError(''); // Clear error when a valid selection is made
+    setError('');
   };
 
   const handleNext = () => {
-    if (!showForm) {
+    if (!showEmployeeDetails) {
       if (!selectedName) {
         setError('Please select a category name before proceeding.');
       } else {
-        setShowForm(true);
+        setShowEmployeeDetails(true);
       }
     } else {
-      handleFormSubmit();
+      handleDelete();
     }
   };
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({...prev, [field]: value}));
-  };
-
-  const handleFormSubmit = () => {
-    // Form validation
-    const {categoryName} = formData;
-    if (!categoryName) {
-      Alert.alert('Error', 'All fields are required.');
-      return;
-    }
-
-    console.log('Form Data Submitted:', formData);
-
-    // Navigate back after successful submission
-    Alert.alert('Success', 'Itinerary category updated successfully.', [
+  const handleDelete = () => {
+    Alert.alert('Success', 'Itinerary category deleted successfully.', [
       {text: 'OK', onPress: () => navigation.navigate('HOME' as never)},
     ]);
   };
 
   const handleBackPress = () => {
-    if (showForm) {
-      setShowForm(false); // Go back to employee selection if in the form
+    if (showEmployeeDetails) {
+      setShowEmployeeDetails(false);
     } else {
-      navigation.navigate('HOME' as never); // Navigate back to the previous screen
+      navigation.navigate('HOME' as never);
     }
   };
 
@@ -82,7 +67,7 @@ const EditItineraryCategory = () => {
     <SafeAreaView style={style.container}>
       <Header
         isBack
-        title="Edit Itinerary Category"
+        title="Delete Itinerary Category"
         onBackPress={handleBackPress}
       />
       <KeyboardAvoidingView
@@ -90,7 +75,7 @@ const EditItineraryCategory = () => {
         style={{flex: 1}}>
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <View style={style.innerContainer}>
-            {!showForm ? (
+            {!showEmployeeDetails ? (
               <View>
                 <Dropdown
                   data={dropdownData}
@@ -108,26 +93,27 @@ const EditItineraryCategory = () => {
               </View>
             ) : (
               <View>
-                <InputText
-                  value={formData.categoryName}
-                  label="Category Name"
-                  onChange={text => handleInputChange('categoryName', text)}
-                  labelFontSize={18}
-                  labelFontWeight="bold"
-                  placeholderFontSize={16}
-                />
+                <View className="mb-7 mt-2">
+                  <Text className="text-Gray-600 font-bold text-2xl">
+                    {selectedName}
+                  </Text>
+                </View>
+                <View>
+                  <InfoItem title={'Details'} value={'*********'} />
+                </View>
               </View>
             )}
           </View>
         </ScrollView>
-        <View className="mt-1 flex justify-center items-center">
+        <View style={{alignItems: 'center'}}>
           <ActionButton
-            title={showForm ? 'Done' : 'Next'}
+            title={showEmployeeDetails ? 'Delete' : 'Next'}
             onPress={handleNext}
             customStyle={{
               marginTop: 20,
               marginBottom: 40,
               width: '60%',
+              backgroundColor: showEmployeeDetails ? '#CC3F08' : '#0B8FAC',
             }}
           />
         </View>
@@ -136,4 +122,4 @@ const EditItineraryCategory = () => {
   );
 };
 
-export default EditItineraryCategory;
+export default DeleteItineraryCategory;

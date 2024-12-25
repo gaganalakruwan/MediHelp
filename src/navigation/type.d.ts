@@ -16,4 +16,5 @@ export declare type StackParameterList = {
   ADDFEEDBACK: undefined;
   DELETEEMPLOYEE: undefined;
   DELETELOCATION: undefined;
+  DELETEITINERARYCATEGORY: undefined;
 };
