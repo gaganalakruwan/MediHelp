@@ -39,7 +39,7 @@ const Header = ({
         <View className="flex-row items-center mt-5">
           <Image
             source={require('../../assets/images/profile.jpg')}
-            className="rounded-full w-12 h-12 mr-2"
+            className="rounded-full w-12 h-12 mr-2 "
           />
 
           <View>

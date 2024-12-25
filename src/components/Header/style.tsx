@@ -5,7 +5,7 @@ import colors from 'constant/colors';
 export default StyleSheet.create({
   container: {
     width: '100%',
-    height: 60,
+    minHeight: 60,
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
