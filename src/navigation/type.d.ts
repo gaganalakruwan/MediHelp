@@ -19,4 +19,5 @@ export declare type StackParameterList = {
   DELETEITINERARYCATEGORY: undefined;
   EDITOUTCOME: undefined;
   DELETEOUTCOME: undefined;
+  EDITNEXTMONTHPLAN: undefined;
 };
