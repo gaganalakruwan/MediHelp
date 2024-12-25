@@ -18,4 +18,5 @@ export declare type StackParameterList = {
   DELETELOCATION: undefined;
   DELETEITINERARYCATEGORY: undefined;
   EDITOUTCOME: undefined;
+  DELETEOUTCOME: undefined;
 };
