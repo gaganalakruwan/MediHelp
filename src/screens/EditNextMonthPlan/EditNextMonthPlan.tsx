@@ -70,16 +70,19 @@ const EditNextMonthPlan = () => {
       id: 1,
       date: '2024-12-08',
       description: 'Corem ipsum dolor sit amet, adipiscing elit.',
+      time: '15 Min',
     },
     {
       id: 2,
       date: '2024-12-08',
       description: 'Sed do eiusmod tempor incididunt.',
+      time: '15 Min',
     },
     {
       id: 3,
       date: '2024-12-08',
       description: 'Lorem ipsum dolor sit amet.',
+      time: '15 Min',
     },
   ];
 
@@ -159,6 +162,7 @@ const EditNextMonthPlan = () => {
     <OutcomeCard
       date={formatDateForDisplay(item.date)}
       description={item.description}
+      time={item.time}
       isSelected={selectedCard === item.id}
       onPress={() => setSelectedCard(item.id)}
     />

@@ -20,6 +20,7 @@ import DeleteItineraryCategory from 'screens/DeleteItineraryCategory/DeleteItine
 import EditOutcome from 'screens/EditOutcome/EditOutcome';
 import DeleteOutcome from 'screens/DeleteOutcome/DeleteOutcome';
 import EditNextMonthPlan from 'screens/EditNextMonthPlan/EditNextMonthPlan';
+import DeleteMonthPlans from 'screens/DeleteMonthPlan/DeleteMonthPlan';
 
 const AuthStack = createStackNavigator<StackParameterList>();
 
@@ -27,7 +28,7 @@ const AuthStackNavigator = () => {
   return (
     <AuthStack.Navigator
       screenOptions={{headerShown: false, gestureEnabled: false}}
-      initialRouteName={'EDITNEXTMONTHPLAN' as keyof StackParameterList}>
+      initialRouteName={'DELETEMONTHPLAN' as keyof StackParameterList}>
       <AuthStack.Screen
         name={'SPLASH' as keyof StackParameterList}
         component={Splash}
@@ -118,6 +119,11 @@ const AuthStackNavigator = () => {
       <AuthStack.Screen
         name={'EDITNEXTMONTHPLAN' as keyof StackParameterList}
         component={EditNextMonthPlan}
+      />
+
+      <AuthStack.Screen
+        name={'DELETEMONTHPLAN' as keyof StackParameterList}
+        component={DeleteMonthPlans}
       />
     </AuthStack.Navigator>
   );
