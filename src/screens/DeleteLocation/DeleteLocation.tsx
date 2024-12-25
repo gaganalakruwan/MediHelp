@@ -17,14 +17,14 @@ import style from './style';
 import Dropdown from 'components/DropdownSelectList/DropdownSelectList';
 import InfoItem from 'components/InfoItem/InfoItem';
 
-const DeleteEmployee = () => {
+const DeleteLocation = () => {
   const navigation = useNavigation();
   const dropdownData = [
-    {key: 1, value: 'Sara Perera'},
-    {key: 2, value: 'Nadun Roshan'},
-    {key: 3, value: 'Naveen'},
-    {key: 4, value: 'Deshitha'},
-    {key: 5, value: 'Navini'},
+    {key: 1, value: 'Nawala'},
+    {key: 2, value: 'Kalutara'},
+    {key: 3, value: 'Colombo'},
+    {key: 4, value: 'Kandy'},
+    {key: 5, value: 'Navinna'},
   ];
 
   const [selectedName, setSelectedName] = useState('');
@@ -40,7 +40,7 @@ const DeleteEmployee = () => {
   const handleNext = () => {
     if (!showEmployeeDetails) {
       if (!selectedName) {
-        setError('Please select an employee before proceeding.');
+        setError('Please select a location before proceeding.');
       } else {
         setShowEmployeeDetails(true);
       }
@@ -50,7 +50,7 @@ const DeleteEmployee = () => {
   };
 
   const handleDelete = () => {
-    Alert.alert('Success', 'Employee deleted successfully.', [
+    Alert.alert('Success', 'Location deleted successfully.', [
       {text: 'OK', onPress: () => navigation.navigate('HOME' as never)},
     ]);
   };
@@ -65,7 +65,7 @@ const DeleteEmployee = () => {
 
   return (
     <SafeAreaView style={style.container}>
-      <Header isBack title="Delete Employee" onBackPress={handleBackPress} />
+      <Header isBack title="Delete Location" onBackPress={handleBackPress} />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{flex: 1}}>
@@ -75,13 +75,13 @@ const DeleteEmployee = () => {
               <View>
                 <Dropdown
                   data={dropdownData}
-                  placeholder="Select an Employee"
+                  placeholder="Select a Location"
                   onSelect={handleSelect}
                   dropdownStyles={{
                     borderRadius: 10,
                   }}
                   dropdownTextStyles={{color: '#333'}}
-                  label="Search Employee"
+                  label="Search Location"
                   labelFontSize={18}
                   labelFontWeight="bold"
                 />
@@ -89,25 +89,23 @@ const DeleteEmployee = () => {
               </View>
             ) : (
               <View>
-                <View style={style.imageContainer}>
-                  <Image
-                    source={require('../../assets/images/profile.jpg')}
-                    style={style.image}
-                  />
-                  <View style={{flex: 1}}>
-                    <Text style={style.selectedName}>{selectedName}</Text>
-                  </View>
+                <View className="mb-7 mt-2">
+                  <Text className="text-Gray-600 font-bold text-2xl">
+                    {selectedName}
+                  </Text>
                 </View>
-
                 <View>
-                  <InfoItem title={'EPF No'} value={'123456'} />
+                  <InfoItem title={'Name'} value={'Nadun Roshan'} />
                   <InfoItem
                     title={'Address'}
                     value={'352/2, Galle Road, Kalutara North '}
                   />
-                  <InfoItem title={'Mobile No'} value={'0765521210'} />
-                  <InfoItem title={'Email'} value={'saraperera@gmail.com'} />
-                  <InfoItem title={'Allocate Location'} value={'Kalutara'} />
+                  <InfoItem title={'Contact Number'} value={'0765521210'} />
+                  <InfoItem title={'Location Manager'} value={'Pabasara'} />
+                  <InfoItem
+                    title={'Manager Contact Number'}
+                    value={'0765521521'}
+                  />
                 </View>
               </View>
             )}
@@ -130,4 +128,4 @@ const DeleteEmployee = () => {
   );
 };
 
-export default DeleteEmployee;
+export default DeleteLocation;
