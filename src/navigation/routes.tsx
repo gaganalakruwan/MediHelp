@@ -17,6 +17,7 @@ import AddFeedback from 'screens/AddFeedback/AddFeedback';
 import DeleteEmployee from 'screens/DeleteEmployee/DeleteEmployee';
 import DeleteLocation from 'screens/DeleteLocation/DeleteLocation';
 import DeleteItineraryCategory from 'screens/DeleteItineraryCategory/DeleteItineraryCategory';
+import EditOutcome from 'screens/EditOutcome/EditOutcome';
 
 const AuthStack = createStackNavigator<StackParameterList>();
 
@@ -24,7 +25,7 @@ const AuthStackNavigator = () => {
   return (
     <AuthStack.Navigator
       screenOptions={{headerShown: false, gestureEnabled: false}}
-      initialRouteName={'DELETEITINERARYCATEGORY' as keyof StackParameterList}>
+      initialRouteName={'EDITOUTCOME' as keyof StackParameterList}>
       <AuthStack.Screen
         name={'SPLASH' as keyof StackParameterList}
         component={Splash}
@@ -100,6 +101,11 @@ const AuthStackNavigator = () => {
       <AuthStack.Screen
         name={'DELETEITINERARYCATEGORY' as keyof StackParameterList}
         component={DeleteItineraryCategory}
+      />
+
+      <AuthStack.Screen
+        name={'EDITOUTCOME' as keyof StackParameterList}
+        component={EditOutcome}
       />
     </AuthStack.Navigator>
   );
