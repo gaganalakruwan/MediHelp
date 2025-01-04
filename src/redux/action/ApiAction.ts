@@ -1,7 +1,7 @@
 import {createActions} from 'reduxsauce';
 
 const {Types, Creators} = createActions({
-  userLogin: ['payload'],
+  authLogin: ['payload'],
   
 });
 export const CommonTypes = Types;

@@ -5,19 +5,18 @@ import {store, persistor} from './src/redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import Spinner from './src/components/Spinner';
 import AuthStackNavigator from 'navigation/routes';
-import { View ,Text} from 'react-native';
+import {View, Text} from 'react-native';
 
 export default function App() {
-
   return (
-    // <Provider store={store}>
-    //   <PersistGate loading={null} persistor={persistor}>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
           <AuthStackNavigator />
-          {/* <Spinner /> */}
+          <Spinner />
         </NavigationContainer>
-    //   </PersistGate>
-    // </Provider>
+      </PersistGate>
+    </Provider>
     // <View style={{flex:1,backgroundColor:'red'}}>
     //   <Text> App </Text>
     // </View>

@@ -5,7 +5,7 @@ const UNAUTHORIZED = 401;
 const axiosInstance = axios;
 
 axiosInstance.defaults.headers.common = {
-  'Content-Type': 'application/json',
+  'Content-Type': 'multipart/form-data',
 };
 
 axiosInstance.defaults.withCredentials = true;

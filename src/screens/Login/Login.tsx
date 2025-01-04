@@ -18,15 +18,22 @@ import ActionButton from 'components/ActionButton';
 import style from './style';
 
 import CustomIcon from 'components/CustomIcon';
-import colors from 'constant/colors';
-import AuthStackNavigator from 'navigation/routes';
+import {useDispatch} from 'react-redux';
+import {
+  endLoading,
+  setMessage,
+  startLoading,
+} from '../../redux/action/SpinnerAction';
+import {CommonActions} from '../../redux/action/ApiAction';
 
 const Login = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
+    // dispatch(endLoading());
     const backAction = () => {
       Alert.alert('Hold on!', 'Are you sure you want to exit?', [
         {
@@ -46,6 +53,31 @@ const Login = () => {
 
     return () => backHandler.remove();
   }, []);
+
+  const authLogin = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Signin...'));
+    var data = new FormData();
+    data.append('username', email);
+    data.append('password', password);
+
+    dispatch(
+      CommonActions.authLogin({
+        params: data,
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res?.status) {
+            navigation.navigate('HOME' as never);
+          }
+          console.log('...........', res);
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
 
   return (
     <SafeAreaView style={style.container}>
@@ -89,7 +121,11 @@ const Login = () => {
             </TouchableOpacity>
 
             <View className="mt-6">
-              <ActionButton title={'Login'} customStyle={{marginTop: 20}} />
+              <ActionButton
+                title={'Login'}
+                customStyle={{marginTop: 20}}
+                onPress={() => authLogin()}
+              />
             </View>
 
             {/* OR Divider */}

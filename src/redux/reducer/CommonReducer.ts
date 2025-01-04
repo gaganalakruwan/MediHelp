@@ -3,10 +3,8 @@ import {
     END_LOADING,
     SET_SPINNER_MESSAGE,
 } from '../../constant/reduxConstants';
-import { commonState } from '../../type';
 
-
-const initialState: commonState = {
+const initialState: any = {
     loading: false,
     spinnerMessage: 'Loading....',
 };
