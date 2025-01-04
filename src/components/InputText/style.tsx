@@ -11,8 +11,7 @@ export default StyleSheet.create({
     fontWeight: '400',
     lineHeight: 18,
     color: colors.iconBlack,
-    marginLeft:10
-    
+    marginLeft: 10,
   },
   errorText: {
     fontSize: 12,
@@ -20,8 +19,7 @@ export default StyleSheet.create({
     fontWeight: '400',
     lineHeight: 18,
     color: colors.buttonRed,
-    marginLeft:10
-    
+    marginLeft: 10,
   },
   input: {
     width: '100%',
@@ -35,8 +33,8 @@ export default StyleSheet.create({
     height: 48,
     paddingTop: 8,
     fontStyle: 'normal',
-    borderBottomWidth:2,
-    borderBottomColor:colors.seperator
+    borderBottomWidth: 2,
+    borderBottomColor: colors.seperator,
   },
 
   secureInput: {
@@ -46,12 +44,12 @@ export default StyleSheet.create({
   iconWrapper: {
     position: 'absolute',
     top: 0,
-    right: 10,
+    right: 20,
     height: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -3,
+    marginTop: -1,
   },
   leftIconWrapper: {
     position: 'absolute',

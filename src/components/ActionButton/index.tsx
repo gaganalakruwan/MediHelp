@@ -27,7 +27,7 @@ type InputProps = {
   onPress: () => void;
   customStyle?: any;
   titleStyle?: any;
-  testId?:string;
+  testId?: string;
 };
 
 const ActionButton = ({
@@ -39,14 +39,18 @@ const ActionButton = ({
   onPress,
   customStyle,
   titleStyle,
-  testId
+  testId,
 }: InputProps) => {
   const {iconName, iconProvider, iconColor, iconSize} =
     (rightIcon as RightIconProps) || {};
   const {lIconName, lIconProvider, lIconColor, lIconSize} =
     (leftIcon as LeftIconProps) || {};
   return (
-    <TouchableOpacity className="bg-quatanary h-12 items-center justify-center rounded-lg" style={[customStyle]} onPress={onPress} testID={testId}>
+    <TouchableOpacity
+      className="bg-quatanary h-12 items-center justify-center rounded-lg"
+      style={[customStyle]}
+      onPress={onPress}
+      testID={testId}>
       {(leftIcon || isLeftIcon) && (
         <CustomIcon
           icon={lIconName || 'arrow-left'}
@@ -55,7 +59,12 @@ const ActionButton = ({
           color={lIconColor || colors.backArrowBlack}
         />
       )}
-      <Text className="text-white font-semibold text-lg" style={[titleStyle]}>{title}</Text>
+
+      <Text
+        className="font-semibold text-lg"
+        style={[{color: '#FFFFFF', ...titleStyle}]}>
+        {title}
+      </Text>
       {(rightIcon || isRightIcon) && (
         <CustomIcon
           icon={iconName || 'arrow-right'}

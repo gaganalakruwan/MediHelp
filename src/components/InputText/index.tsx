@@ -29,7 +29,8 @@ type LeftIconProps = {
 };
 
 type InputProps = {
-  placeHolder: string;
+  label?: string;
+  placeHolder?: string;
   value: string;
   onChange?: (val: string) => void;
   containerStyle?: ViewStyle;
@@ -43,12 +44,19 @@ type InputProps = {
   error?: string;
   editable?: boolean;
   testId?: string;
+  labelFontSize?: number;
+  placeholderFontSize?: number;
+  labelFontWeight?: string;
+  multiline?: boolean;
+  numberOfLines?: number;
+  maxLength?: number;
 };
 
 const InputText = ({
   containerStyle,
   keyboardType,
   onChange,
+  label,
   placeHolder,
   secureTextEntry,
   value,
@@ -60,6 +68,12 @@ const InputText = ({
   error,
   editable,
   testId,
+  labelFontSize,
+  placeholderFontSize,
+  labelFontWeight,
+  multiline = false,
+  numberOfLines,
+  maxLength,
 }: InputProps) => {
   const {
     iconName,
@@ -83,13 +97,17 @@ const InputText = ({
     if (!passwordVisibility) {
       return 'eye';
     } else {
-      return 'eye-slash';
+      return 'eye-off';
     }
   }, [iconName, passwordVisibility]);
 
   return (
     <View className="w-full" style={[{...containerStyle}]}>
-      <Text className="font-medium ml-1 mb-1 text-xl">{placeHolder}</Text>
+      <Text
+        className="font-medium ml-1 mb-1 text-xl"
+        style={{fontSize: labelFontSize, fontWeight: labelFontWeight}}>
+        {label}
+      </Text>
       <View style={style.inputWrapper}>
         <TextInput
           testID={testId}
@@ -102,11 +120,14 @@ const InputText = ({
           editable={editable}
           onFocus={onFocus}
           className="w-full text-black pl-5 pt-2 pb-3 h-12 bg-primary rounded-xl text-lg"
-          style={[inputStyle]}
+          style={[inputStyle, {fontSize: placeholderFontSize}]}
           blurOnSubmit={false}
           onSubmitEditing={() => Keyboard.dismiss()}
           autoFocus={autoFocus}
           placeholderTextColor={colors.darkGray}
+          multiline={multiline}
+          numberOfLines={numberOfLines}
+          maxLength={maxLength}
         />
         {(iconName || secureTextEntry) && (
           <TouchableOpacity
@@ -114,7 +135,7 @@ const InputText = ({
             onPress={secureTextEntry ? toggleVisibility : action}>
             <CustomIcon
               icon={rightIconName}
-              type={iconProvider || 'FontAwesome'}
+              type={iconProvider || 'Ionicons'}
               size={iconSize || 24}
               color={iconColor || colors.quatanary}
             />
