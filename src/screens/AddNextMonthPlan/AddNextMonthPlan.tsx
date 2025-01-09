@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -17,9 +17,19 @@ import {useNavigation} from '@react-navigation/native';
 import Header from 'components/Header/Header';
 import DatePicker from 'react-native-date-picker';
 import Dropdown from 'components/DropdownSelectList/DropdownSelectList';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  endLoading,
+  setMessage,
+  startLoading,
+} from '../../redux/action/SpinnerAction';
+import {CommonActions} from '../../redux/action/ApiAction';
+import moment from 'moment';
 
 const AddNextMonthPlan = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const {userId, userName} = useSelector((state: any) => state.auth);
   const [maindate, setMainDate] = useState('');
   const [reason, setReason] = useState('');
   const [comments, setComments] = useState('');
@@ -36,19 +46,201 @@ const AddNextMonthPlan = () => {
     '0',
   )}-${dateParts[1].padStart(2, '0')}`;
 
-  const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const [startTime, setStartTime] = useState(new Date().toLocaleTimeString());
+  const [endTime, setEndTime] = useState(new Date().toLocaleTimeString());
   const [open1, setOpen1] = useState(false);
+  const [locationData, setLocationData] = useState([]);
+  const [ItType, setItType] = useState([]);
+  const [ItCategory, setItCategory] = useState([]);
+  const [selectTime, setSelectTime] = useState('start');
+  const [selectType, setSelectType] = useState();
+  const [selectlocation, setSelectlocation] = useState();
+  const [selectlocationNew, setSelectlocationNew] = useState();
+  const [selectCategory, setSelectCategory] = useState();
 
-  const dropdownData = [
-    {key: 1, value: 'Option 1'},
-    {key: 2, value: 'Option 2'},
-    {key: 3, value: 'Option 3'},
-  ];
-
+  useEffect(() => {
+    // tokenRefresh();
+    loadCategory();
+    loadType();
+    loadGroup();
+    loadLocation();
+  }, []);
   const handleSelect = (value: string) => {
+    console.log('Selected Value:', value);
+    const filterData = locationData.filter(a => a.value == value);
+    setSelectlocation(filterData[0].key);
+  };
+  const handleSelectOther = (value: string) => {
     console.log('Selected Value:', value);
   };
 
+  const tokenRefresh = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Loading...'));
+    var data = new FormData();
+    data.append('username', userName);
+    dispatch(
+      CommonActions.refreshToken({
+        params: data,
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res) {
+            loadCategory();
+            loadType();
+            loadGroup();
+            loadLocation();
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
+  const loadCategory = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Loading...'));
+
+    dispatch(
+      CommonActions.getItCategory({
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res && res.length > 0) {
+            const category = res?.map(item => {
+              // Combine newObj and item
+              return {
+                key: item?.idtbl_itenary_category,
+                value: item?.itenary_category,
+                ...item,
+              };
+            });
+            setItCategory(category);
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
+  const loadType = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Loading...'));
+
+    dispatch(
+      CommonActions.getItType({
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res && res.length > 0) {
+            const category = res?.map(item => {
+              // Combine newObj and item
+              return {
+                key: item?.idtbl_itenary_type,
+                value: item?.itenary_type,
+                ...item,
+              };
+            });
+            console.log(category);
+            setItType(category);
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
+  const loadGroup = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Loading...'));
+
+    dispatch(
+      CommonActions.getItGroup({
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res) {
+            console.log('...........3', res);
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
+  const loadLocation = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Loading...'));
+
+    dispatch(
+      CommonActions.getLocation({
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res && res.length > 0) {
+            console.log(res);
+            const locationMap = res?.map(item => {
+              // Combine newObj and item
+              return {
+                key: item?.idtbl_location_type,
+                value: item?.location_type,
+              };
+            });
+            console.log(locationMap);
+            setLocationData(locationMap);
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
+  const insertMonthPlan = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Uploading Data...'));
+    const parsedDate = moment(date, 'MM/DD/YYYY, h:mm:ss A');
+    const parsedStartTime = moment(date, 'MM/DD/YYYY, h:mm:ss A');
+    const parsedEndTime = moment(date, 'MM/DD/YYYY, h:mm:ss A');
+
+    var data = new FormData();
+    data.append('month', parsedDate.format('YYYY-MM'));
+    data.append('date', parsedDate.format('YYYY-MM-DD'));
+    data.append('start_time', parsedStartTime.format('HH:mm:ss'));
+    data.append('end_time', parsedEndTime.format('HH:mm:ss'));
+    data.append('type', selectType);
+    data.append('category', selectCategory);
+    data.append('group', 2);
+    data.append('task', 2);
+    data.append('location', selectlocation);
+    data.append('itenary', 'asx');
+    data.append('meet_location', meetingPlace);
+    data.append('recordOption', 1);
+    data.append('recordID', '');
+    data.append('userid', userId);
+
+    console.log(data);
+
+    dispatch(
+      CommonActions.insertMonthPlan({
+        params: data,
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res?.status) {
+            navigation.goBack();
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
   return (
     <SafeAreaView style={style.container}>
       <Header
@@ -63,14 +255,45 @@ const AddNextMonthPlan = () => {
           <View style={style.innerContainer}>
             <View>
               <Dropdown
-                data={dropdownData}
+                data={ItType}
+                onSelect={handleSelectOther}
+                placeholder="Select Itinerary Type"
+                setSelected={setSelectType}
+                dropdownStyles={{
+                  borderRadius: 10,
+                }}
+                dropdownTextStyles={{color: '#333'}}
+                label="Itinerary Type"
+                labelFontSize={18}
+                labelFontWeight="bold"
+              />
+            </View>
+            <View>
+              <Dropdown
+                data={ItCategory}
+                onSelect={handleSelectOther}
                 placeholder="Select Itinerary Category"
-                onSelect={handleSelect}
+                setSelected={setSelectCategory}
                 dropdownStyles={{
                   borderRadius: 10,
                 }}
                 dropdownTextStyles={{color: '#333'}}
                 label="Itinerary Category"
+                labelFontSize={18}
+                labelFontWeight="bold"
+              />
+            </View>
+            <View>
+              <Dropdown
+                data={locationData}
+                placeholder="Select Location"
+                onSelect={handleSelect}
+                setSelected={setSelectlocationNew}
+                dropdownStyles={{
+                  borderRadius: 10,
+                }}
+                dropdownTextStyles={{color: '#333'}}
+                label="Location"
                 labelFontSize={18}
                 labelFontWeight="bold"
               />
@@ -119,14 +342,18 @@ const AddNextMonthPlan = () => {
 
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <InputText
-                value={time}
-                label="Time"
+                value={startTime}
+                label="Start Time"
                 labelFontSize={18}
                 labelFontWeight="bold"
                 placeholderFontSize={16}
                 editable={false}
               />
-              <TouchableOpacity onPress={() => setOpen1(true)}>
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectTime('start');
+                  setOpen1(true);
+                }}>
                 <CustomIcon
                   icon={'time'}
                   type={'Ionicons'}
@@ -135,19 +362,29 @@ const AddNextMonthPlan = () => {
                   style={{marginLeft: -45, marginTop: 18}}
                 />
               </TouchableOpacity>
-              <DatePicker
-                modal
-                open={open1}
-                date={date}
-                mode="time"
-                onConfirm={date => {
-                  setOpen1(false);
-                  setTime(date.toLocaleTimeString());
-                }}
-                onCancel={() => {
-                  setOpen(false);
-                }}
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <InputText
+                value={endTime}
+                label="End Time"
+                labelFontSize={18}
+                labelFontWeight="bold"
+                placeholderFontSize={16}
+                editable={false}
               />
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectTime('end');
+                  setOpen1(true);
+                }}>
+                <CustomIcon
+                  icon={'time'}
+                  type={'Ionicons'}
+                  size={25}
+                  color={'#0B8FAC'}
+                  style={{marginLeft: -45, marginTop: 18}}
+                />
+              </TouchableOpacity>
             </View>
 
             <InputText
@@ -174,6 +411,7 @@ const AddNextMonthPlan = () => {
 
             <View className="mt-1 flex justify-center items-center">
               <ActionButton
+                onPress={() => insertMonthPlan()}
                 title={'Add'}
                 customStyle={{
                   marginTop: 40,
@@ -183,6 +421,23 @@ const AddNextMonthPlan = () => {
               />
             </View>
           </View>
+          <DatePicker
+            modal
+            open={open1}
+            date={date}
+            mode="time"
+            onConfirm={date => {
+              setOpen1(false);
+              if (selectTime == 'start') {
+                setStartTime(date.toLocaleTimeString());
+              } else {
+                setEndTime(date.toLocaleTimeString());
+              }
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

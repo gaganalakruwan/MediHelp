@@ -1,9 +1,9 @@
-import {LOGOUT, SET_USER_DATA} from '../../constant/reduxConstants';
+import {LOGOUT, SET_TOKEN, SET_USER_DATA, SET_USER_ID} from '../../constant/reduxConstants';
 
 const initialState = {
-  authData: {
-    access_token: ''
-  },
+  access_token: '',
+  userName: '',
+  userId:''
 };
 
 function authReducer(state = initialState, action: any) {
@@ -11,7 +11,17 @@ function authReducer(state = initialState, action: any) {
     case SET_USER_DATA:
       return {
         ...state,
-        authData: action.payload,
+        userName: action.payload,
+      };
+    case SET_TOKEN:
+      return {
+        ...state,
+        access_token: action.payload,
+      };
+    case SET_USER_ID:
+      return {
+        ...state,
+        userId: action.payload,
       };
     case LOGOUT:
       return {

@@ -9,10 +9,12 @@ import CustomIcon from 'components/CustomIcon';
 type DropdownProps = {
   data: Array<{key: string | number; value: string}>;
   placeholder?: string;
-  onSelect: (selectedValue: string) => void;
+  onSelect?: (selectedValue: string) => void;
   dropdownStyles?: any;
   dropdownTextStyles?: any;
   label?: string;
+  selected?:any;
+  setSelected?:any;
   labelFontSize?: number;
   labelFontWeight?: string;
 };
@@ -26,8 +28,9 @@ const Dropdown = ({
   dropdownTextStyles,
   labelFontSize,
   labelFontWeight,
+  selected,
+  setSelected
 }: DropdownProps) => {
-  const [selected, setSelected] = useState<string | null>(null);
 
   return (
     <View className="w-full">

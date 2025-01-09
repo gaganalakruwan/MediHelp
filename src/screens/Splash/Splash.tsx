@@ -3,13 +3,19 @@ import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import style from './style';
+import {useSelector} from 'react-redux';
 
 const Splash = () => {
   const navigation = useNavigation();
+  const {userId} = useSelector((state: any) => state.auth);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.navigate('LOGIN' as never);
+      if (userId) {
+        navigation.navigate('HOME' as never);
+      } else {
+        navigation.navigate('LOGIN' as never);
+      }
     }, 3000);
 
     return () => clearTimeout(timer); // Cleanup the timer

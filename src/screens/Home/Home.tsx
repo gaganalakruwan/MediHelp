@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from 'components/Header/Header';
 import {useNavigation} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -8,10 +8,37 @@ import HomeCard from 'components/HomeCard/HomeCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Searchbar} from 'react-native-paper';
 import {ImageSlider} from 'react-native-image-slider-banner';
+import {useDispatch, useSelector} from 'react-redux';
+import {CommonActions} from '../../redux/action/ApiAction';
+import { endLoading } from '../../redux/action/SpinnerAction';
 
 const Home = () => {
   const navigation = useNavigation();
+  
   const [searchQuery, setSearchQuery] = React.useState('');
+  const {userName} = useSelector((state: any) => state.auth);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // tokenRefresh();
+    dispatch(endLoading());
+  }, []);
+
+  const tokenRefresh = () => {
+    var data = new FormData();
+    data.append('username', userName);
+    console.log(data);
+    dispatch(
+      CommonActions.refreshToken({
+        params: data,
+        success: (res: any) => {
+          console.log("..........",res);
+        },
+        failed: (error: any) => {
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
   return (
     <SafeAreaView style={style.container}>
       <Header isMenu />
@@ -27,7 +54,7 @@ const Home = () => {
           </View>
 
           <View>
-            <ImageSlider
+            {/* <ImageSlider
               data={[
                 {
                   img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU',
@@ -48,7 +75,7 @@ const Home = () => {
                 resizeMode: 'contain',
                 marginTop: 20,
               }}
-            />
+            /> */}
           </View>
 
           <View style={style.servicesContainer}>
@@ -62,7 +89,12 @@ const Home = () => {
             <HomeCard title={'Employees'} />
             <HomeCard title={'Locations'} />
             <HomeCard title={'Itinerary Category'} />
-            <HomeCard title={'Next Month Plan'} />
+            <HomeCard
+              title={'Next Month Plan'}
+              onPressAdd={() =>
+                navigation.navigate('ADDNEXTMONTHPLAN' as never)
+              }
+            />
             <HomeCard title={'Upload Outcome'} />
             <HomeCard title={'Manage Itinerary'} />
           </View>

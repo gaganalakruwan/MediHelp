@@ -18,22 +18,27 @@ import ActionButton from 'components/ActionButton';
 import style from './style';
 
 import CustomIcon from 'components/CustomIcon';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   endLoading,
   setMessage,
   startLoading,
 } from '../../redux/action/SpinnerAction';
-import {CommonActions} from '../../redux/action/ApiAction';
+import {
+  CommonActions,
+  setUserData,
+  setUserId,
+} from '../../redux/action/ApiAction';
+import {jwtDecode} from 'jwt-decode';
 
 const Login = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const {userName, access_token} = useSelector((state: any) => state.auth);
   useEffect(() => {
-    // dispatch(endLoading());
+    dispatch(endLoading());
     const backAction = () => {
       Alert.alert('Hold on!', 'Are you sure you want to exit?', [
         {
@@ -54,6 +59,44 @@ const Login = () => {
     return () => backHandler.remove();
   }, []);
 
+  const tokenRefresh = async () => {
+    var data = new FormData();
+    data.append('username', 'admin');
+    console.log(data);
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+      body: data,
+    };
+
+    return await fetch(
+      `https://aws.erav.lk/medihelp/Api/RegenerateToken`,
+      requestOptions,
+    )
+      .then(response => response.json())
+      .then(data => {
+        console.log(".........",data);
+      })
+      .catch(error => {
+        console.log('error.......', error);
+      });
+
+    // dispatch(
+    //   CommonActions.refreshToken({
+    //     params: data,
+    //     success: (res: any) => {
+    //       console.log("..........",res);
+    //     },
+    //     failed: (error: any) => {
+    //       console.log('Login failed:', error);
+    //     },
+    //   }),
+    // );
+  };
+
   const authLogin = () => {
     dispatch(startLoading());
     dispatch(setMessage('Signin...'));
@@ -66,7 +109,11 @@ const Login = () => {
         params: data,
         success: (res: any) => {
           dispatch(endLoading());
+          const decoded = jwtDecode(res?.access_token);
+          console.log(decoded);
           if (res?.status) {
+            dispatch(setUserData(email));
+            dispatch(setUserId(decoded?.uid));
             navigation.navigate('HOME' as never);
           }
           console.log('...........', res);
