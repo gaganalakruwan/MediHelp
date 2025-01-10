@@ -59,43 +59,6 @@ const Login = () => {
     return () => backHandler.remove();
   }, []);
 
-  const tokenRefresh = async () => {
-    var data = new FormData();
-    data.append('username', 'admin');
-    console.log(data);
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-        'Content-Type': 'multipart/form-data',
-      },
-      body: data,
-    };
-
-    return await fetch(
-      `https://aws.erav.lk/medihelp/Api/RegenerateToken`,
-      requestOptions,
-    )
-      .then(response => response.json())
-      .then(data => {
-        console.log(".........",data);
-      })
-      .catch(error => {
-        console.log('error.......', error);
-      });
-
-    // dispatch(
-    //   CommonActions.refreshToken({
-    //     params: data,
-    //     success: (res: any) => {
-    //       console.log("..........",res);
-    //     },
-    //     failed: (error: any) => {
-    //       console.log('Login failed:', error);
-    //     },
-    //   }),
-    // );
-  };
 
   const authLogin = () => {
     dispatch(startLoading());

@@ -54,24 +54,33 @@ const AddNextMonthPlan = () => {
   const [ItCategory, setItCategory] = useState([]);
   const [selectTime, setSelectTime] = useState('start');
   const [selectType, setSelectType] = useState();
+  const [selectTypeNew, setSelectTypeNew] = useState();
   const [selectlocation, setSelectlocation] = useState();
   const [selectlocationNew, setSelectlocationNew] = useState();
   const [selectCategory, setSelectCategory] = useState();
+  const [selectCategoryNew, setSelectCategoryNew] = useState();
 
   useEffect(() => {
-    // tokenRefresh();
-    loadCategory();
-    loadType();
-    loadGroup();
-    loadLocation();
+    tokenRefresh();
+    // loadCategory();
+    // loadType();
+    // loadGroup();
+    // loadLocation();
   }, []);
   const handleSelect = (value: string) => {
     console.log('Selected Value:', value);
     const filterData = locationData.filter(a => a.value == value);
     setSelectlocation(filterData[0].key);
   };
-  const handleSelectOther = (value: string) => {
+  const handleSelectType = (value: string) => {
     console.log('Selected Value:', value);
+    const filterData = ItType.filter(a => a.value == value);
+    setSelectType(filterData[0].key);
+  };
+  const handleSelectCategory = (value: string) => {
+    console.log('Selected Value:', value);
+    const filterData = ItCategory.filter(a => a.value == value);
+    setSelectCategory(filterData[0].key);
   };
 
   const tokenRefresh = () => {
@@ -201,30 +210,47 @@ const AddNextMonthPlan = () => {
     );
   };
   const insertMonthPlan = () => {
-    dispatch(startLoading());
-    dispatch(setMessage('Uploading Data...'));
+    // dispatch(startLoading());
+    // dispatch(setMessage('Uploading Data...'));
     const parsedDate = moment(date, 'MM/DD/YYYY, h:mm:ss A');
     const parsedStartTime = moment(date, 'MM/DD/YYYY, h:mm:ss A');
     const parsedEndTime = moment(date, 'MM/DD/YYYY, h:mm:ss A');
 
+    var dataRefresh = new FormData();
+    dataRefresh.append('username', userName);
+
     var data = new FormData();
-    data.append('month', parsedDate.format('YYYY-MM'));
-    data.append('date', parsedDate.format('YYYY-MM-DD'));
-    data.append('start_time', parsedStartTime.format('HH:mm:ss'));
-    data.append('end_time', parsedEndTime.format('HH:mm:ss'));
-    data.append('type', selectType);
-    data.append('category', selectCategory);
+    // data.append('month', parsedDate.format('YYYY-MM'));
+    // data.append('date', parsedDate.format('YYYY-MM-DD'));
+    // data.append('start_time', parsedStartTime.format('HH:mm:ss'));
+    // data.append('end_time', parsedEndTime.format('HH:mm:ss'));
+    // data.append('type', parseInt(selectType?selectType:"2" ));
+    // data.append('category', parseInt(selectCategory ? selectCategory :"7"));
+    // data.append('group', 2);
+    // data.append('task', 2);
+    // data.append('location', parseInt(selectlocation ? selectlocation : "4"));
+    // data.append('itenary', 'asx');
+    // data.append('meet_location', meetingPlace);
+    // data.append('recordOption', 1);
+    // data.append('recordID', '');
+    // data.append('userid', parseInt(userId));
+
+    data.append('month', '2025-01');
+    data.append('date', '2025-01-10');
+    data.append('start_time', '11:08:37');
+    data.append('end_time', '11208:37');
+    data.append('type', 2);
+    data.append('category', 7);
     data.append('group', 2);
     data.append('task', 2);
-    data.append('location', selectlocation);
+    data.append('location', 4);
     data.append('itenary', 'asx');
-    data.append('meet_location', meetingPlace);
+    data.append('meet_location', 'ertyu');
     data.append('recordOption', 1);
     data.append('recordID', '');
-    data.append('userid', userId);
+    data.append('userid', 1);
 
     console.log(data);
-
     dispatch(
       CommonActions.insertMonthPlan({
         params: data,
@@ -240,6 +266,25 @@ const AddNextMonthPlan = () => {
         },
       }),
     );
+
+    // dispatch(
+    //   CommonActions.refreshToken({
+    //     params: dataRefresh,
+    //     success: (res: any) => {
+    //       dispatch(endLoading());
+    //       console.log('.........>>>', res);
+    //       if (res) {
+    //         setTimeout(() => {
+
+    //         }, 1000);
+    //       }
+    //     },
+    //     failed: (error: any) => {
+    //       dispatch(endLoading());
+    //       console.log('Login failed:>>>>', error);
+    //     },
+    //   }),
+    // );
   };
   return (
     <SafeAreaView style={style.container}>
@@ -256,7 +301,7 @@ const AddNextMonthPlan = () => {
             <View>
               <Dropdown
                 data={ItType}
-                onSelect={handleSelectOther}
+                onSelect={handleSelectType}
                 placeholder="Select Itinerary Type"
                 setSelected={setSelectType}
                 dropdownStyles={{
@@ -271,7 +316,7 @@ const AddNextMonthPlan = () => {
             <View>
               <Dropdown
                 data={ItCategory}
-                onSelect={handleSelectOther}
+                onSelect={handleSelectCategory}
                 placeholder="Select Itinerary Category"
                 setSelected={setSelectCategory}
                 dropdownStyles={{

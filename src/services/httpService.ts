@@ -45,9 +45,9 @@ axiosInstance.interceptors.response.use(
             console.log(originalRequest.headers);
             store.dispatch(setToken(res.data.access_token));
             originalRequest.headers['Authorization'] = `${res.data.access_token}`;
-            setTimeout(() => {
-              return axiosInstance(originalRequest);
-            }, 1000);
+            // setTimeout(() => {
+            //   return axiosInstance(originalRequest);
+            // }, 1000);
           })
           .catch(err => {
             console.log('...Error New', err.config);

@@ -10,16 +10,16 @@ import {Searchbar} from 'react-native-paper';
 import {ImageSlider} from 'react-native-image-slider-banner';
 import {useDispatch, useSelector} from 'react-redux';
 import {CommonActions} from '../../redux/action/ApiAction';
-import { endLoading } from '../../redux/action/SpinnerAction';
+import {endLoading} from '../../redux/action/SpinnerAction';
 
 const Home = () => {
   const navigation = useNavigation();
-  
+
   const [searchQuery, setSearchQuery] = React.useState('');
   const {userName} = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
-    // tokenRefresh();
+    tokenRefresh();
     dispatch(endLoading());
   }, []);
 
@@ -31,7 +31,7 @@ const Home = () => {
       CommonActions.refreshToken({
         params: data,
         success: (res: any) => {
-          console.log("..........",res);
+          console.log('..........', res);
         },
         failed: (error: any) => {
           console.log('Login failed:', error);

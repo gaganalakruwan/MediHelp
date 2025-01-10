@@ -6,7 +6,7 @@ import {
   getItTypeUrl,
   getFeedbackUrl,
   getItLocationUrl,
-  refreshTokenUrl
+  refreshTokenUrl,
 } from 'constant/api';
 import httpService from './httpService';
 
@@ -17,8 +17,9 @@ export default class ApiService {
     }
     return Promise.reject(new Error('Error'));
   };
-  static insertMonthPlan = (data:any) => {
-    return httpService.post(insertPlanUrl,data);
+  static insertMonthPlan = (data: any) => {
+    console.log(data);
+    return httpService.post(insertPlanUrl, data);
   };
   static getItCategory = () => {
     return httpService.post(getItCategoryUrl);
@@ -35,8 +36,8 @@ export default class ApiService {
   static getItLocation = () => {
     return httpService.post(getItLocationUrl);
   };
-  static refreshToken = (data:any) => {
-    console.log(">>>>>>>>>>>>",data)
-    return httpService.post(refreshTokenUrl,data);
+  static refreshToken = (data: any) => {
+    console.log('>>>>>>>>>>>>', data);
+    return httpService.post(refreshTokenUrl, data);
   };
 }
