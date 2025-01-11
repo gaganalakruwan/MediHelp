@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import colors from '../../constant/colors';
 
 export default StyleSheet.create({
   card: {
@@ -9,28 +8,29 @@ export default StyleSheet.create({
     borderRadius: 15,
     marginBottom: 14,
     backgroundColor: '#CCF4F3',
-    justifyContent: 'space-between', // Ensures the left and right sections are spaced
+    justifyContent: 'space-between',
   },
-  selectedCard: {
-    borderColor: '#68B8C1',
-    borderWidth: 2,
+  disabledCard: {
+    backgroundColor: '#CCF4F3', // Optionally dim the background for disabled
   },
-  noTimeCard: {
-    justifyContent: 'flex-start',
-  },
+
   leftContent: {
-    flex: 2, // Adjust to take more space for date
+    flex: 2,
     justifyContent: 'center',
+  },
+  centeredContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titles: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
-    marginRight: 10,
   },
   rightContent: {
     flexDirection: 'row',
-    justifyContent: 'space-around', // Distributes buttons evenly
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   buttonAdd: {
@@ -40,7 +40,6 @@ export default StyleSheet.create({
     borderRadius: 25,
     marginHorizontal: 5,
   },
-
   buttonEdit: {
     paddingVertical: 8,
     paddingHorizontal: 12,
@@ -55,9 +54,9 @@ export default StyleSheet.create({
     borderRadius: 25,
     marginHorizontal: 5,
   },
-
   buttonText: {
     color: 'white',
     fontWeight: '600',
+    textAlign: 'center',
   },
 });

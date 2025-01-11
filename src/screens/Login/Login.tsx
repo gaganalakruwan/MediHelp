@@ -59,7 +59,6 @@ const Login = () => {
     return () => backHandler.remove();
   }, []);
 
-
   const authLogin = () => {
     dispatch(startLoading());
     dispatch(setMessage('Signin...'));
@@ -84,6 +83,7 @@ const Login = () => {
         failed: (error: any) => {
           dispatch(endLoading());
           console.log('Login failed:', error);
+          Alert.alert('Login Failed', 'Username or Password Invalid');
         },
       }),
     );
@@ -170,8 +170,7 @@ const Login = () => {
               <Text className="font-semibold text-Gray-400 text-lg">
                 Don't have an account?{' '}
               </Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('SIGNUP' as never)}>
+              <TouchableOpacity>
                 <Text className="font-semibold text-quatanary text-lg">
                   Sign Up
                 </Text>

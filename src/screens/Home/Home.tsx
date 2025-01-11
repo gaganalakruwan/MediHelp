@@ -80,23 +80,31 @@ const Home = () => {
 
           <View style={style.servicesContainer}>
             <Text style={style.servicesTitle}>Services</Text>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <Text style={style.seeAllButton}>See All</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <View style={{marginTop: 20}}>
-            <HomeCard title={'Employees'} />
+            {/* <HomeCard title={'Employees'} />
             <HomeCard title={'Locations'} />
-            <HomeCard title={'Itinerary Category'} />
+            <HomeCard title={'Itinerary Category'} /> */}
             <HomeCard
               title={'Next Month Plan'}
               onPressAdd={() =>
                 navigation.navigate('ADDNEXTMONTHPLAN' as never)
               }
+              onPressDelete={() => {}}
+              onPressEdit={() => {}}
             />
-            <HomeCard title={'Upload Outcome'} />
-            <HomeCard title={'Manage Itinerary'} />
+
+            <HomeCard
+              title={' Add Feedback '}
+              disabled={false}
+              onPress={() => navigation.navigate('ADDFEEDBACK' as never)}
+            />
+
+            {/* <HomeCard title={'Manage Itinerary'} /> */}
           </View>
         </View>
       </ScrollView>
