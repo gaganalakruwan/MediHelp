@@ -6,7 +6,7 @@ export default StyleSheet.create({
     padding: 16,
     borderColor: '#CCF4F3',
     borderRadius: 15,
-    marginBottom: 14,
+    marginBottom: 18,
     backgroundColor: '#CCF4F3',
     justifyContent: 'space-between',
   },
