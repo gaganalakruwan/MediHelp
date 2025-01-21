@@ -9,6 +9,9 @@ const {Types, Creators} = createActions({
   getFeedback: ['payload'],
   getLocation: ['payload'],
   refreshToken: ['payload'],
+  getAllMonthlyPlans: ['payload'],
+  editPlan: ['payload'],
+  deletePlan: ['payload'],
 });
 export const CommonTypes = Types;
 export const CommonActions = Creators;

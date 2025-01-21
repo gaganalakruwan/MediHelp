@@ -7,6 +7,9 @@ import {
   getFeedbackUrl,
   getItLocationUrl,
   refreshTokenUrl,
+  getAllMonthlyPlanUrl,
+  deletePlanUrl,
+  editPlanUrl,
 } from 'constant/api';
 import httpService from './httpService';
 
@@ -39,5 +42,16 @@ export default class ApiService {
   static refreshToken = (data: any) => {
     console.log('>>>>>>>>>>>>', data);
     return httpService.post(refreshTokenUrl, data);
+  };
+  static getNextMonthPlan = () => {
+    return httpService.post(getAllMonthlyPlanUrl);
+  };
+  static editPlan = (data: any) => {
+    console.log('>>>>>>>>>>>>', data);
+    return httpService.post(editPlanUrl, data);
+  };
+  static deletePlan = (data: any) => {
+    console.log('>>>>>>>>>>>>', data);
+    return httpService.post(deletePlanUrl, data);
   };
 }

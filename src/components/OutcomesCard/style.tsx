@@ -33,7 +33,7 @@ export default StyleSheet.create({
   location: {
     fontSize: 14,
     color: '#666',
-    marginTop: -15,
+    // marginTop: -15,
   },
 
   client: {

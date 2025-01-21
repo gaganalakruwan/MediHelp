@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   ScrollView,
@@ -20,6 +20,14 @@ import DatePicker from 'react-native-date-picker';
 import Dropdown from 'components/DropdownSelectList/DropdownSelectList';
 import OutcomeCard from 'components/OutcomesCard/OutcomesCard';
 import {FlatList} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  endLoading,
+  setMessage,
+  startLoading,
+} from '../../redux/action/SpinnerAction';
+import {CommonActions} from '../../redux/action/ApiAction';
+import moment from 'moment';
 
 const EditNextMonthPlan = () => {
   const navigation = useNavigation();
@@ -36,6 +44,8 @@ const EditNextMonthPlan = () => {
 
   // Get today's date in the required format
   const today = new Date();
+  const dispatch = useDispatch();
+  const {userId, userName} = useSelector((state: any) => state.auth);
   const todayFormatted = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
   const [selectedDate, setSelectedDate] = useState('');
   const [error, setError] = useState('');
@@ -54,6 +64,26 @@ const EditNextMonthPlan = () => {
 
   const [time, setTime] = useState(new Date().toLocaleTimeString());
   const [open1, setOpen1] = useState(false);
+  const [nextMnthData, setNextMnthData] = useState([]);
+
+  const [locationData, setLocationData] = useState([]);
+  const [ItType, setItType] = useState([]);
+  const [ItCategory, setItCategory] = useState([]);
+
+  const [selectlocation, setSelectlocation] = useState();
+  const [selectlocationNew, setSelectlocationNew] = useState();
+  const [selectCategory, setSelectCategory] = useState();
+  const [selectType, setSelectType] = useState();
+  const [defaultType, setDefaultType] = useState({});
+  const [defaultLocation, setDefaultLocation] = useState({});
+  const [defaultCategry, setDefaultCategry] = useState({});
+
+  const [reason, setReason] = useState('');
+  const [comments, setComments] = useState('');
+  const [meetingPlace, setMeetingPlace] = useState('');
+  const [startTime, setStartTime] = useState(new Date().toLocaleTimeString());
+  const [endTime, setEndTime] = useState(new Date().toLocaleTimeString());
+  const [selectTime, setSelectTime] = useState('start');
 
   const dropdownData = [
     {key: 1, value: 'Option 1'},
@@ -61,8 +91,158 @@ const EditNextMonthPlan = () => {
     {key: 3, value: 'Option 3'},
   ];
 
-  const handleSelect = (value: string) => {
-    console.log('Selected Value:', value);
+  useEffect(() => {
+    tokenRefresh();
+  }, []);
+
+  const tokenRefresh = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Loading...'));
+    var data = new FormData();
+    data.append('username', userName);
+    dispatch(
+      CommonActions.refreshToken({
+        params: data,
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res) {
+            getMonthPlan();
+            loadCategory();
+            loadType();
+            loadGroup();
+            loadLocation();
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
+
+  const getMonthPlan = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Loading...'));
+
+    dispatch(
+      CommonActions.getAllMonthlyPlans({
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res) {
+            console.log('.........>>>>>>>>', res);
+            setNextMnthData(res?.data);
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
+
+  const loadCategory = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Loading...'));
+
+    dispatch(
+      CommonActions.getItCategory({
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res && res.length > 0) {
+            const category = res?.map(item => {
+              // Combine newObj and item
+              return {
+                key: item?.idtbl_itenary_category,
+                value: item?.itenary_category,
+                ...item,
+              };
+            });
+            setItCategory(category);
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
+  const loadType = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Loading...'));
+
+    dispatch(
+      CommonActions.getItType({
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res && res.length > 0) {
+            const category = res?.map(item => {
+              // Combine newObj and item
+              return {
+                key: item?.idtbl_itenary_type,
+                value: item?.itenary_type,
+                ...item,
+              };
+            });
+            console.log(category);
+            setItType(category);
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
+  const loadGroup = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Loading...'));
+
+    dispatch(
+      CommonActions.getItGroup({
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res) {
+            console.log('...........3', res);
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
+  };
+  const loadLocation = () => {
+    dispatch(startLoading());
+    dispatch(setMessage('Loading...'));
+
+    dispatch(
+      CommonActions.getLocation({
+        success: (res: any) => {
+          dispatch(endLoading());
+          if (res && res.length > 0) {
+            console.log(res);
+            const locationMap = res?.map(item => {
+              // Combine newObj and item
+              return {
+                key: item?.idtbl_location_type,
+                value: item?.location_type,
+              };
+            });
+            console.log(locationMap);
+            setLocationData(locationMap);
+          }
+        },
+        failed: (error: any) => {
+          dispatch(endLoading());
+          console.log('Login failed:', error);
+        },
+      }),
+    );
   };
 
   const cards = [
@@ -109,8 +289,51 @@ const EditNextMonthPlan = () => {
 
   const handleNext = () => {
     if (!selectedDate || selectedCard === null) {
-      Alert.alert('Error', 'Please select a date and an outcome.');
-      return;
+      const parsedDate = moment(date, 'MM/DD/YYYY, h:mm:ss A');
+      const parsedStartTime = moment(date, 'MM/DD/YYYY, h:mm:ss A');
+      const parsedEndTime = moment(date, 'MM/DD/YYYY, h:mm:ss A');
+
+      var dataRefresh = new FormData();
+      dataRefresh.append('username', userName);
+
+      var data = new FormData();
+      data.append('month', parsedDate.format('YYYY-MM'));
+      data.append('date', parsedDate.format('YYYY-MM-DD'));
+      data.append('start_time', parsedStartTime.format('HH:mm:ss'));
+      data.append('end_time', parsedEndTime.format('HH:mm:ss'));
+      data.append('type', parseInt(selectType ? selectType : '2'));
+      data.append('category', parseInt(selectCategory ? selectCategory : '7'));
+      data.append('group', 2);
+      data.append('task', 2);
+      data.append('location', parseInt(selectlocation ? selectlocation : '4'));
+      data.append('itenary', 'asx');
+      data.append('meet_location', meetingPlace);
+      data.append('recordOption', 1);
+      data.append('recordID', selectedCard);
+      data.append('userid', parseInt(userId));
+
+      console.log(data);
+      dispatch(
+        CommonActions.insertMonthPlan({
+          params: data,
+          success: (res: any) => {
+            console.log('........>', res);
+            dispatch(endLoading());
+            if (res?.status) {
+              Alert.alert('Confirm', 'Data uploaded', [
+                {text: 'OK', onPress: () => navigation.goBack()},
+              ]);
+            }
+          },
+          failed: (error: any) => {
+            dispatch(endLoading());
+            console.log('Login failed:', error);
+            Alert.alert('Error', 'Data upload fail. Try again later', [
+              {text: 'OK', onPress: () => {}},
+            ]);
+          },
+        }),
+      );
     }
     setShowForm(true);
   };
@@ -154,19 +377,76 @@ const EditNextMonthPlan = () => {
       navigation.navigate('HOME' as never);
     }
   };
-
+  const handleSelect = (value: string) => {
+    console.log('Selected Value:', value);
+    const filterData = locationData.filter(a => a.value == value);
+    if (filterData.length > 0) {
+      setSelectlocation(filterData[0].key);
+    }
+  };
+  const handleSelectType = (value: string) => {
+    console.log('Selected Value:', value);
+    const filterData = ItType.filter(a => a.value == value);
+    if (filterData.length > 0) {
+      setSelectType(filterData[0].key);
+    }
+  };
+  const handleSelectCategory = (value: string) => {
+    console.log('Selected Value:', value);
+    const filterData = ItCategory.filter(a => a.value == value);
+    if (filterData.length > 0) {
+      setSelectCategory(filterData[0].key);
+    }
+  };
   // Filter outcomes based on the selected date
-  const filteredCards = cards.filter(card => card.date === selectedDate);
+  const filteredCards = nextMnthData.filter(
+    card => card?.start_date === selectedDate,
+  );
 
   const renderCard = ({item}: {item: (typeof cards)[0]}) => (
     <OutcomeCard
-      date={formatDateForDisplay(item.date)}
-      description={item.description}
-      time={item.time}
-      isSelected={selectedCard === item.id}
-      onPress={() => setSelectedCard(item.id)}
+      date={formatDateForDisplay(item?.start_date)}
+      description={`Category : ${item?.itenary_category} , Itenary : ${item?.itenary}`}
+      time={`${moment
+        .duration(
+          moment(item?.end_time, 'HH:mm:ss').diff(
+            moment(item?.start_time, 'HH:mm:ss'),
+          ),
+        )
+        .minutes()} Min`}
+      isSelected={selectedCard === item.idtbl_job_list}
+      onPress={() => setObjectData(item)}
+      location={item?.location ? item?.location : item?.meet_location}
     />
   );
+
+  const setObjectData = (item: any) => {
+    setSelectedCard(item.idtbl_job_list);
+    setMeetingPlace(item?.location);
+    const itIypeId = ItType.filter(a => a.value === item?.itenary_type);
+    const locationId = locationData.filter(
+      a => a.value === item?.meet_location,
+    );
+    const categoryId = ItCategory.filter(
+      a => a.value === item?.itenary_category,
+    );
+    if (itIypeId.length > 0) {
+      setDefaultType(itIypeId[0]);
+      setSelectType(itIypeId[0].key);
+    }
+    if (locationId.length > 0) {
+      setDefaultLocation(locationId[0]);
+      setSelectlocation(locationId[0].key);
+      setSelectlocationNew(locationId[0].key);
+    }
+    if (categoryId.length > 0) {
+      setDefaultCategry(categoryId[0]);
+      setSelectCategory(categoryId[0].key);
+    }
+    setDate(new Date(item?.start_date));
+    setStartTime(new Date(item?.start_time).toLocaleTimeString());
+    setEndTime(new Date(item?.end_time).toLocaleTimeString());
+  };
 
   return (
     <SafeAreaView style={style.container}>
@@ -194,13 +474,11 @@ const EditNextMonthPlan = () => {
                   }}
                 />
                 {error ? <Text style={style.error}>{error}</Text> : null}
-                {/* <Text style={style.text}>
-                  Selected Date: {selectedDate || 'None'}
-                </Text> */}
+
                 {filteredCards.length > 0 ? (
                   <FlatList
                     data={filteredCards}
-                    keyExtractor={item => item.id.toString()}
+                    keyExtractor={item => item?.idtbl_job_list}
                     renderItem={renderCard}
                     contentContainerStyle={style.flatListContainer}
                   />
@@ -211,25 +489,60 @@ const EditNextMonthPlan = () => {
                 )}
               </View>
             ) : (
-              <View>
+              <View style={style.innerContainer}>
                 <View>
                   <Dropdown
-                    data={dropdownData}
-                    placeholder="Select Itinerary Category"
-                    onSelect={handleSelect}
+                    data={ItType}
+                    selected={selectType}
+                    onSelect={handleSelectType}
+                    placeholder="Select Itinerary Type"
+                    setSelected={setSelectType}
                     dropdownStyles={{
                       borderRadius: 10,
                     }}
+                    defaultOption={defaultType}
+                    dropdownTextStyles={{color: '#333'}}
+                    label="Itinerary Type"
+                    labelFontSize={18}
+                    labelFontWeight="bold"
+                  />
+                </View>
+                <View>
+                  <Dropdown
+                    data={ItCategory}
+                    onSelect={handleSelectCategory}
+                    placeholder="Select Itinerary Category"
+                    setSelected={setSelectCategory}
+                    dropdownStyles={{
+                      borderRadius: 10,
+                    }}
+                    defaultOption={defaultCategry}
                     dropdownTextStyles={{color: '#333'}}
                     label="Itinerary Category"
                     labelFontSize={18}
                     labelFontWeight="bold"
                   />
                 </View>
+                <View>
+                  <Dropdown
+                    data={locationData}
+                    placeholder="Select Location"
+                    onSelect={handleSelect}
+                    setSelected={setSelectlocationNew}
+                    dropdownStyles={{
+                      borderRadius: 10,
+                    }}
+                    dropdownTextStyles={{color: '#333'}}
+                    defaultOption={defaultLocation}
+                    label="Location"
+                    labelFontSize={18}
+                    labelFontWeight="bold"
+                  />
+                </View>
                 <InputText
-                  value={formData.meetingPlace}
+                  value={meetingPlace}
+                  onChange={setMeetingPlace}
                   label="Meeting Place"
-                  onChange={value => handleInputChange('meetingPlace', value)}
                   labelFontSize={18}
                   labelFontWeight="bold"
                   placeholderFontSize={16}
@@ -270,14 +583,18 @@ const EditNextMonthPlan = () => {
 
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <InputText
-                    value={time}
-                    label="Time"
+                    value={startTime}
+                    label="Start Time"
                     labelFontSize={18}
                     labelFontWeight="bold"
                     placeholderFontSize={16}
                     editable={false}
                   />
-                  <TouchableOpacity onPress={() => setOpen1(true)}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setSelectTime('start');
+                      setOpen1(true);
+                    }}>
                     <CustomIcon
                       icon={'time'}
                       type={'Ionicons'}
@@ -286,36 +603,46 @@ const EditNextMonthPlan = () => {
                       style={{marginLeft: -45, marginTop: 18}}
                     />
                   </TouchableOpacity>
-                  <DatePicker
-                    modal
-                    open={open1}
-                    date={date}
-                    mode="time"
-                    onConfirm={date => {
-                      setOpen1(false);
-                      setTime(date.toLocaleTimeString());
-                    }}
-                    onCancel={() => {
-                      setOpen(false);
-                    }}
+                </View>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <InputText
+                    value={endTime}
+                    label="End Time"
+                    labelFontSize={18}
+                    labelFontWeight="bold"
+                    placeholderFontSize={16}
+                    editable={false}
                   />
+                  <TouchableOpacity
+                    onPress={() => {
+                      setSelectTime('end');
+                      setOpen1(true);
+                    }}>
+                    <CustomIcon
+                      icon={'time'}
+                      type={'Ionicons'}
+                      size={25}
+                      color={'#0B8FAC'}
+                      style={{marginLeft: -45, marginTop: 18}}
+                    />
+                  </TouchableOpacity>
                 </View>
 
                 <InputText
-                  value={formData.reason}
+                  value={reason}
+                  onChange={setReason}
                   label="Reason"
-                  onChange={value => handleInputChange('reason', value)}
                   labelFontSize={18}
                   labelFontWeight="bold"
                   placeholderFontSize={16}
                 />
 
                 <InputText
-                  value={formData.comments}
+                  value={comments}
+                  onChange={setComments}
                   label="Comments"
                   labelFontSize={18}
                   labelFontWeight="bold"
-                  onChange={value => handleInputChange('comments', value)}
                   placeholderFontSize={16}
                   multiline={true}
                   numberOfLines={5}
@@ -325,6 +652,23 @@ const EditNextMonthPlan = () => {
               </View>
             )}
           </View>
+          <DatePicker
+            modal
+            open={open1}
+            date={date}
+            mode="time"
+            onConfirm={date => {
+              setOpen1(false);
+              if (selectTime == 'start') {
+                setStartTime(date.toLocaleTimeString());
+              } else {
+                setEndTime(date.toLocaleTimeString());
+              }
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
         </ScrollView>
         <View style={style.bttonStyle}>
           <ActionButton

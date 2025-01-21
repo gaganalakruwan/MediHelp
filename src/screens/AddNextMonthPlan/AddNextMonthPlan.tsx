@@ -236,21 +236,6 @@ const AddNextMonthPlan = () => {
     data.append('recordID', '');
     data.append('userid', parseInt(userId));
 
-    // data.append('month', '2025-01');
-    // data.append('date', '2025-01-10');
-    // data.append('start_time', '11:08:37');
-    // data.append('end_time', '11208:37');
-    // data.append('type', 2);
-    // data.append('category', 7);
-    // data.append('group', 2);
-    // data.append('task', 2);
-    // data.append('location', 4);
-    // data.append('itenary', 'asx');
-    // data.append('meet_location', 'ertyu');
-    // data.append('recordOption', 1);
-    // data.append('recordID', '');
-    // data.append('userid', 1);
-
     console.log(data);
     dispatch(
       CommonActions.insertMonthPlan({
@@ -262,11 +247,6 @@ const AddNextMonthPlan = () => {
             
             Alert.alert('Confirm', 'Data uploaded', [
               {text: 'OK', onPress: () => navigation.goBack()},
-              // {
-              //   text: 'Cancel',
-              //   onPress: () => console.log('Cancel Pressed'),
-              //   style: 'cancel',
-              // },
             ]);
           }
         },
@@ -275,11 +255,6 @@ const AddNextMonthPlan = () => {
           console.log('Login failed:', error);
           Alert.alert('Error', 'Data upload fail. Try again later', [
             {text: 'OK', onPress: () => {}},
-            // {
-            //   text: 'Cancel',
-            //   onPress: () => console.log('Cancel Pressed'),
-            //   style: 'cancel',
-            // },
           ]);
         },
       }),

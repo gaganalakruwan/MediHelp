@@ -17,6 +17,7 @@ type DropdownProps = {
   setSelected?:any;
   labelFontSize?: number;
   labelFontWeight?: string;
+  defaultOption?:any;
 };
 
 const Dropdown = ({
@@ -29,7 +30,8 @@ const Dropdown = ({
   labelFontSize,
   labelFontWeight,
   selected,
-  setSelected
+  setSelected,
+  defaultOption
 }: DropdownProps) => {
 
   return (
@@ -56,6 +58,7 @@ const Dropdown = ({
             backgroundColor: '#CCF4F3',
           }}
           dropdownStyles={{borderColor: '#CCF4F3', borderWidth: 4}}
+          defaultOption={defaultOption}
           searchicon={
             <CustomIcon
               icon={'search'}

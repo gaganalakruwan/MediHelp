@@ -38,9 +38,9 @@ const OutcomeCard: React.FC<CardProps> = ({
       <View style={style.leftContent}>
         <Text style={style.date}>{date}</Text>
         <Text style={style.description}>{description}</Text>
-        {location && client && (
+        <Text style={style.location}>Location : {location}</Text>
+        {client && (
           <View>
-            <Text style={style.location}>{location}</Text>
             <Text style={style.client}>{client}</Text>
           </View>
         )}

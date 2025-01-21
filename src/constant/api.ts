@@ -9,3 +9,6 @@ export const insertPlanUrl = `${baseUrl}Jobinsertupdate`;
 export const getItLocationUrl = `${baseUrl}getIteneryLocation`;
 export const getFeedbackUrl = `${baseUrl}getIteneryFeedbackType`;
 export const refreshTokenUrl = `${baseUrlToken}RegenerateToken`;
+export const getAllMonthlyPlanUrl = `${baseUrlToken}getAllMonthlyPlans`;
+export const editPlanUrl = `${baseUrlToken}editPlan`;
+export const deletePlanUrl = `${baseUrlToken}deletePlan`;

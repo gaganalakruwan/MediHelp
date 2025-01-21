@@ -94,8 +94,9 @@ const Home = () => {
               onPressAdd={() =>
                 navigation.navigate('ADDNEXTMONTHPLAN' as never)
               }
-              onPressDelete={() => {}}
-              onPressEdit={() => {}}
+              onPressEdit={() => {
+                navigation.navigate('EDITNEXTMONTHPLAN' as never);
+              }}
             />
 
             <HomeCard
