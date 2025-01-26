@@ -83,7 +83,10 @@ const EditNextMonthPlan = () => {
   const [meetingPlace, setMeetingPlace] = useState('');
   const [startTime, setStartTime] = useState(new Date().toLocaleTimeString());
   const [endTime, setEndTime] = useState(new Date().toLocaleTimeString());
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [selectTime, setSelectTime] = useState('start');
+  const [dateArray, setDateArray] = useState([]);
 
   const dropdownData = [
     {key: 1, value: 'Option 1'},
@@ -132,6 +135,18 @@ const EditNextMonthPlan = () => {
           if (res) {
             console.log('.........>>>>>>>>', res);
             setNextMnthData(res?.data);
+            const markedDates = res?.data.reduce((acc, appointment) => {
+              acc[appointment.start_date] = {
+                marked: true,
+                dotColor: '#D1FE17',
+                customStyles: {
+                  container: {backgroundColor: '#D1FE17'},
+                  text: {color: 'white'},
+                },
+              };
+              return acc;
+            }, {});
+            setDateArray(markedDates);
           }
         },
         failed: (error: any) => {
@@ -288,10 +303,21 @@ const EditNextMonthPlan = () => {
   };
 
   const handleNext = () => {
-    if (!selectedDate || selectedCard === null) {
+    console.log(selectedDate);
+    console.log('>>>>>>>>>', selectedCard);
+
+    if ((selectedDate == '' || selectedCard == null) && !showForm) {
+      Alert.alert('Error', 'Please select date and plan', [
+        {text: 'OK', onPress: () => {}},
+      ]);
+      console.log('>A>>>>>>>>>');
+    }
+    else if(selectedDate != '' && selectedCard != null && showForm){
+      dispatch(startLoading());
+      dispatch(setMessage('Uploading...'));
       const parsedDate = moment(date, 'MM/DD/YYYY, h:mm:ss A');
-      const parsedStartTime = moment(date, 'MM/DD/YYYY, h:mm:ss A');
-      const parsedEndTime = moment(date, 'MM/DD/YYYY, h:mm:ss A');
+      const parsedStartTime = moment(startDate, 'MM/DD/YYYY, h:mm:ss A');
+      const parsedEndTime = moment(endDate, 'MM/DD/YYYY, h:mm:ss A');
 
       var dataRefresh = new FormData();
       dataRefresh.append('username', userName);
@@ -310,11 +336,12 @@ const EditNextMonthPlan = () => {
       data.append('meet_location', meetingPlace);
       data.append('recordOption', 1);
       data.append('recordID', selectedCard);
-      data.append('userid', parseInt(userId));
+      data.append('reason', reason);
+      data.append('comment', comments);
 
       console.log(data);
       dispatch(
-        CommonActions.insertMonthPlan({
+        CommonActions.editPlan({
           params: data,
           success: (res: any) => {
             console.log('........>', res);
@@ -334,8 +361,9 @@ const EditNextMonthPlan = () => {
           },
         }),
       );
+    } else {
+      setShowForm(true);
     }
-    setShowForm(true);
   };
 
   const handleInputChange = (field, value) => {
@@ -444,8 +472,8 @@ const EditNextMonthPlan = () => {
       setSelectCategory(categoryId[0].key);
     }
     setDate(new Date(item?.start_date));
-    setStartTime(new Date(item?.start_time).toLocaleTimeString());
-    setEndTime(new Date(item?.end_time).toLocaleTimeString());
+    setStartTime(item?.start_time);
+    setEndTime(item?.end_time);
   };
 
   return (
@@ -469,9 +497,7 @@ const EditNextMonthPlan = () => {
                 </View>
                 <CalendarComponent
                   onDateSelected={handleDateSelected}
-                  markedDates={{
-                    [todayFormatted]: {marked: true, dotColor: 'red'},
-                  }}
+                  markedDates={dateArray}
                 />
                 {error ? <Text style={style.error}>{error}</Text> : null}
 
@@ -652,28 +678,11 @@ const EditNextMonthPlan = () => {
               </View>
             )}
           </View>
-          <DatePicker
-            modal
-            open={open1}
-            date={date}
-            mode="time"
-            onConfirm={date => {
-              setOpen1(false);
-              if (selectTime == 'start') {
-                setStartTime(date.toLocaleTimeString());
-              } else {
-                setEndTime(date.toLocaleTimeString());
-              }
-            }}
-            onCancel={() => {
-              setOpen(false);
-            }}
-          />
         </ScrollView>
         <View style={style.bttonStyle}>
           <ActionButton
             title={showForm ? 'Done' : 'Next'}
-            onPress={handleNext}
+            onPress={() => handleNext()}
             customStyle={{
               marginTop: 20,
               marginBottom: 40,
@@ -681,6 +690,28 @@ const EditNextMonthPlan = () => {
             }}
           />
         </View>
+        {open1 && (
+          <DatePicker
+            modal
+            open={open1}
+            date={date}
+            mode="time"
+            onConfirm={date => {
+              setOpen1(false);
+              console.log(date);
+              if (selectTime == 'start') {
+                setStartTime(date.toLocaleTimeString());
+                setStartDate(date);
+              } else {
+                setEndTime(date.toLocaleTimeString());
+                setEndDate(date);
+              }
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
+        )}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

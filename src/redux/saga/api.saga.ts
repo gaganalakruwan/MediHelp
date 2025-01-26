@@ -152,6 +152,19 @@ export function* deletePlan({payload: {success, failed,params}}: TSaga) {
     console.log('Error in userLogin saga:', error);
   }
 }
+export function* addFeedback({payload: {success, failed,params}}: TSaga) {
+  try {
+    const {data} = yield call(Api.sendFeedback,params);
+    if (data) {
+      success?.(data);
+    } else {
+      throw new Error('No data returned from API');
+    }
+  } catch (error) {
+    failed?.(error);
+    console.log('Error in userLogin saga:', error);
+  }
+}
 export function* getLocation({payload: {success, failed}}: TSaga) {
   try {
     const {data} = yield call(Api.getItLocation);
@@ -178,4 +191,5 @@ export function* apiSaga() {
   yield takeLatest(CommonTypes.GET_ALL_MONTHLY_PLANS, getAllMonthlyPlans);
   yield takeLatest(CommonTypes.EDIT_PLAN, editPlan);
   yield takeLatest(CommonTypes.DELETE_PLAN, deletePlan);
+  yield takeLatest(CommonTypes.ADD_FEEDBACK, addFeedback);
 }

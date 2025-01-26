@@ -12,4 +12,22 @@ export default StyleSheet.create({
     backgroundColor: colors.white,
     marginTop: 20,
   },
+  flatListContainer: {
+    marginTop: 20,
+  },
+  noOutcomesText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'red',
+    textAlign: 'center',
+    paddingHorizontal: 16,
+    marginTop: 50,
+  },
+  error: {
+    color: 'red',
+    marginTop: 20,
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });

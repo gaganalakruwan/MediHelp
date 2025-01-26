@@ -10,6 +10,7 @@ import {
   getAllMonthlyPlanUrl,
   deletePlanUrl,
   editPlanUrl,
+  addFeedbackUrl,
 } from 'constant/api';
 import httpService from './httpService';
 
@@ -53,5 +54,9 @@ export default class ApiService {
   static deletePlan = (data: any) => {
     console.log('>>>>>>>>>>>>', data);
     return httpService.post(deletePlanUrl, data);
+  };
+  static sendFeedback = (data: any) => {
+    console.log('>>>>>>>>>>>>', data);
+    return httpService.post(addFeedbackUrl, data);
   };
 }

@@ -9,7 +9,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Searchbar} from 'react-native-paper';
 import {ImageSlider} from 'react-native-image-slider-banner';
 import {useDispatch, useSelector} from 'react-redux';
-import {CommonActions} from '../../redux/action/ApiAction';
+import {CommonActions, logout} from '../../redux/action/ApiAction';
 import {endLoading} from '../../redux/action/SpinnerAction';
 
 const Home = () => {
@@ -103,6 +103,11 @@ const Home = () => {
               title={' Add Feedback '}
               disabled={false}
               onPress={() => navigation.navigate('ADDFEEDBACK' as never)}
+            />
+            <HomeCard
+              title={' Logout '}
+              disabled={false}
+              onPress={() => {navigation.replace('LOGIN' as never); dispatch(logout())}}
             />
 
             {/* <HomeCard title={'Manage Itinerary'} /> */}

@@ -211,8 +211,8 @@ const AddNextMonthPlan = () => {
     );
   };
   const insertMonthPlan = () => {
-    // dispatch(startLoading());
-    // dispatch(setMessage('Uploading Data...'));
+    dispatch(startLoading());
+    dispatch(setMessage('Uploading Data...'));
     const parsedDate = moment(date, 'MM/DD/YYYY, h:mm:ss A');
     const parsedStartTime = moment(date, 'MM/DD/YYYY, h:mm:ss A');
     const parsedEndTime = moment(date, 'MM/DD/YYYY, h:mm:ss A');
@@ -234,7 +234,8 @@ const AddNextMonthPlan = () => {
     data.append('meet_location', meetingPlace);
     data.append('recordOption', 1);
     data.append('recordID', '');
-    data.append('userid', parseInt(userId));
+    data.append('reason', reason);
+    data.append('comment', comments);
 
     console.log(data);
     dispatch(

@@ -12,11 +12,17 @@ const {Types, Creators} = createActions({
   getAllMonthlyPlans: ['payload'],
   editPlan: ['payload'],
   deletePlan: ['payload'],
+  addFeedback: ['payload'],
 });
 export const CommonTypes = Types;
 export const CommonActions = Creators;
 
-import {SET_TOKEN, SET_USER_DATA, SET_USER_ID} from 'constant/reduxConstants';
+import {
+  SET_TOKEN,
+  SET_USER_DATA,
+  SET_USER_ID,
+  LOGOUT,
+} from 'constant/reduxConstants';
 
 export const setUserData = (data: any) => ({
   type: SET_USER_DATA,
@@ -30,4 +36,7 @@ export const setToken = (data: any) => ({
 export const setUserId = (data: any) => ({
   type: SET_USER_ID,
   payload: data,
+});
+export const logout = () => ({
+  type: LOGOUT,
 });
